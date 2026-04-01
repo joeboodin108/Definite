@@ -2,7 +2,7 @@ import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Container from "@/components/ui/Container";
-import ContactForm from "@/components/contact/ContactForm";
+import PageHero from "@/components/ui/PageHero";
 import { Phone, MapPin, Clock, MessageCircle } from "lucide-react";
 
 export async function generateMetadata({
@@ -46,32 +46,20 @@ export default async function ContactPage({ params }: Props) {
 
   return (
     <>
-      {/* Hero Banner */}
-      <section className="relative bg-primary py-32 pt-40">
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-            backgroundSize: "30px 30px",
-          }}
-        />
-        <Container className="relative z-10 text-center">
-          <h1
-            className={`${headingFont} text-4xl font-bold text-white sm:text-5xl`}
-          >
-            {t("title")}
-          </h1>
-          <p className="mt-4 text-lg text-white/70">{t("subtitle")}</p>
-          <div className="mx-auto mt-5 h-[2px] w-12 bg-accent" />
-        </Container>
-      </section>
+      <PageHero
+        variant="split"
+        title={t("title")}
+        subtitle={t("subtitle")}
+        isArabic={isArabic}
+        headingFont={headingFont}
+      />
 
       {/* Contact Content */}
       <section className="py-20 lg:py-28">
         <Container>
-          <div className="grid gap-12 lg:grid-cols-2">
-            {/* Info Column */}
-            <div className="space-y-8">
+          {/* Contact Info */}
+          <div className="mx-auto max-w-2xl">
+            <div className="grid gap-8 sm:grid-cols-2">
               {/* Phone */}
               <div className="flex items-start gap-4">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary-light text-primary">
@@ -131,49 +119,46 @@ export default async function ContactPage({ params }: Props) {
                   <p className="mt-1 text-mid">{t("workingHoursValue")}</p>
                 </div>
               </div>
-
-              {/* Social Media */}
-              <div>
-                <h3 className="font-semibold text-primary mb-3">{t("socialMedia")}</h3>
-                <div className="flex gap-3">
-                  <a
-                    href="https://instagram.com/definite_dental_clinics"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 text-primary transition-all hover:bg-primary hover:text-white"
-                    aria-label="Instagram"
-                  >
-                    <InstagramIcon className="h-4 w-4" />
-                  </a>
-                  <a
-                    href="https://facebook.com/DefiniteClinics"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 text-primary transition-all hover:bg-primary hover:text-white"
-                    aria-label="Facebook"
-                  >
-                    <FacebookIcon className="h-4 w-4" />
-                  </a>
-                </div>
-              </div>
-
-              {/* Google Maps Placeholder */}
-              <div className="mt-6 h-64 w-full overflow-hidden rounded-xl bg-primary-light flex items-center justify-center text-mid text-sm">
-                {/* Replace this div with an iframe when Google Maps embed URL is available */}
-                <p>{isArabic ? "خريطة جوجل - قريباً" : "Google Maps — Coming Soon"}</p>
-              </div>
             </div>
 
-            {/* Form Column */}
-            <div>
-              <h2 className={`${headingFont} text-2xl font-bold text-primary sm:text-3xl`}>
-                {t("sendMessage")}
-              </h2>
-              <div className="mt-3 h-[2px] w-10 bg-accent" />
-              <div className="mt-8">
-                <ContactForm />
+            {/* Social Media */}
+            <div className="mt-8 text-center">
+              <h3 className="font-semibold text-primary mb-3">{t("socialMedia")}</h3>
+              <div className="flex justify-center gap-3">
+                <a
+                  href="https://instagram.com/definite_dental_clinics"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 text-primary transition-all hover:bg-primary hover:text-white"
+                  aria-label="Instagram"
+                >
+                  <InstagramIcon className="h-4 w-4" />
+                </a>
+                <a
+                  href="https://facebook.com/DefiniteClinics"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 text-primary transition-all hover:bg-primary hover:text-white"
+                  aria-label="Facebook"
+                >
+                  <FacebookIcon className="h-4 w-4" />
+                </a>
               </div>
             </div>
+          </div>
+
+          {/* Google Maps */}
+          <div className="mt-12 overflow-hidden rounded-2xl">
+            <iframe
+              src="https://www.google.com/maps?q=31.9484122,35.8825359&z=17&output=embed"
+              width="100%"
+              height="400"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title={isArabic ? "موقع العيادة على الخريطة" : "Clinic location on map"}
+            />
           </div>
         </Container>
       </section>

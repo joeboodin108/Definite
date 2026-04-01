@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { services } from "@/lib/services-data";
-import { CheckCircle2, MessageCircle } from "lucide-react";
+import { CheckCircle2, MessageCircle, ChevronDown } from "lucide-react";
 import type { ServiceCategory } from "@/types";
 
 export default function BookingForm() {
@@ -36,7 +36,7 @@ export default function BookingForm() {
 
   if (submitted) {
     return (
-      <div className="text-center py-16">
+      <div className="text-center py-16 animate-fade-in">
         <CheckCircle2 className="mx-auto h-16 w-16 text-accent" />
         <h3 className={`mt-6 ${headingFont} text-3xl font-bold text-primary`}>
           {t("successTitle")}
@@ -65,7 +65,9 @@ export default function BookingForm() {
   }
 
   const inputClass =
-    "w-full rounded-xl border border-primary/10 bg-white px-4 py-3 text-sm text-dark outline-none transition-all focus:border-primary/30 focus:ring-2 focus:ring-primary/10";
+    "w-full rounded-xl border border-primary/10 bg-white px-4 py-3 text-sm text-dark outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10";
+  const selectClass =
+    "w-full rounded-xl border border-primary/10 bg-white px-4 py-3 text-sm text-dark outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 appearance-none cursor-pointer";
   const labelClass = "mb-1.5 block text-sm font-medium text-dark";
 
   return (
@@ -115,38 +117,44 @@ export default function BookingForm() {
         <div className="grid gap-6 sm:grid-cols-2">
           <div>
             <label className={labelClass}>{t("category")} *</label>
-            <select
-              required
-              value={category}
-              onChange={(e) => {
-                setCategory(e.target.value as ServiceCategory);
-                setFormData({ ...formData, service: "" });
-              }}
-              className={inputClass}
-            >
-              <option value="">{t("selectCategory")}</option>
-              <option value="dental-treatments">{t("dental")}</option>
-              <option value="facial-treatments">{t("facial")}</option>
-            </select>
+            <div className="relative">
+              <select
+                required
+                value={category}
+                onChange={(e) => {
+                  setCategory(e.target.value as ServiceCategory);
+                  setFormData({ ...formData, service: "" });
+                }}
+                className={selectClass}
+              >
+                <option value="">{t("selectCategory")}</option>
+                <option value="dental-treatments">{t("dental")}</option>
+                <option value="facial-treatments">{t("facial")}</option>
+              </select>
+              <ChevronDown className="pointer-events-none absolute end-3 top-1/2 h-4 w-4 -translate-y-1/2 text-mid" />
+            </div>
           </div>
           <div>
             <label className={labelClass}>{t("service")} *</label>
-            <select
-              required
-              value={formData.service}
-              onChange={(e) =>
-                setFormData({ ...formData, service: e.target.value })
-              }
-              className={inputClass}
-              disabled={!category}
-            >
-              <option value="">{t("selectService")}</option>
-              {filteredServices.map((s) => (
-                <option key={s.slug} value={s.slug}>
-                  {s.title[locale]}
-                </option>
-              ))}
-            </select>
+            <div className="relative">
+              <select
+                required
+                value={formData.service}
+                onChange={(e) =>
+                  setFormData({ ...formData, service: e.target.value })
+                }
+                className={selectClass}
+                disabled={!category}
+              >
+                <option value="">{t("selectService")}</option>
+                {filteredServices.map((s) => (
+                  <option key={s.slug} value={s.slug}>
+                    {s.title[locale]}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="pointer-events-none absolute end-3 top-1/2 h-4 w-4 -translate-y-1/2 text-mid" />
+            </div>
           </div>
         </div>
 

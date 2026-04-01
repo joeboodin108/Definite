@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import GeometricBackground from "@/components/ui/GeometricBackground";
 import SectionHeading from "@/components/ui/SectionHeading";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import type { TestimonialData } from "@/types";
 
 const testimonials: TestimonialData[] = [
@@ -40,34 +42,73 @@ export default function TestimonialsSlider() {
   const t = useTranslations("Home");
   const locale = useLocale() as "en" | "ar";
   const [active, setActive] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
+  const next = useCallback(() =>
+    setActive((i) => (i === testimonials.length - 1 ? 0 : i + 1)), []);
   const prev = () =>
     setActive((i) => (i === 0 ? testimonials.length - 1 : i - 1));
-  const next = () =>
-    setActive((i) => (i === testimonials.length - 1 ? 0 : i + 1));
+
+  // Autoplay on mobile
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(next, 5000);
+    return () => clearInterval(timer);
+  }, [isPaused, next]);
 
   return (
-    <section className="py-20 lg:py-28 bg-white">
-      <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <SectionHeading title={t("testimonials")} />
+    <section className="py-20 lg:py-28 bg-gradient-to-b from-white to-primary-light/30 relative overflow-hidden">
+      <GeometricBackground variant="light" />
+      {/* Decorative quote mark */}
+      <div
+        className="absolute top-8 start-1/2 -translate-x-1/2 select-none pointer-events-none font-cormorant text-[12rem] leading-none text-primary/[0.03]"
+        aria-hidden="true"
+      >
+        &ldquo;
+      </div>
+
+      <div className="mx-auto max-w-7xl px-5 lg:px-8 relative z-10">
+        <ScrollReveal>
+          <SectionHeading title={t("testimonials")} label={locale === "ar" ? "آراء المرضى" : "Patient Stories"} />
+        </ScrollReveal>
 
         <div className="mt-16">
-          {/* Cards grid on desktop, single card on mobile */}
+          {/* Cards grid on desktop */}
           <div className="hidden md:grid md:grid-cols-3 gap-6">
             {testimonials.map((item, index) => (
-              <TestimonialCard key={index} item={item} locale={locale} />
+              <ScrollReveal key={index} animation="fade-up" delay={index * 120}>
+                <TestimonialCard item={item} locale={locale} />
+              </ScrollReveal>
             ))}
           </div>
 
-          {/* Mobile single card with arrows */}
-          <div className="md:hidden">
-            <TestimonialCard
-              item={testimonials[active]}
-              locale={locale}
-            />
+          {/* Mobile single card with crossfade */}
+          <div
+            className="md:hidden relative"
+            onTouchStart={() => setIsPaused(true)}
+            onTouchEnd={() => setIsPaused(false)}
+          >
+            <div className="relative min-h-[260px]">
+              {testimonials.map((item, index) => (
+                <div
+                  key={index}
+                  className={`transition-all duration-500 ${
+                    index === active
+                      ? "opacity-100 translate-x-0"
+                      : "opacity-0 absolute inset-0 translate-x-4 pointer-events-none"
+                  }`}
+                >
+                  <TestimonialCard item={item} locale={locale} />
+                </div>
+              ))}
+            </div>
             <div className="mt-6 flex items-center justify-center gap-4">
               <button
-                onClick={prev}
+                onClick={() => {
+                  prev();
+                  setIsPaused(true);
+                  setTimeout(() => setIsPaused(false), 8000);
+                }}
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 text-primary transition-colors hover:bg-primary hover:text-white"
                 aria-label="Previous"
               >
@@ -77,7 +118,11 @@ export default function TestimonialsSlider() {
                 {testimonials.map((_, i) => (
                   <button
                     key={i}
-                    onClick={() => setActive(i)}
+                    onClick={() => {
+                      setActive(i);
+                      setIsPaused(true);
+                      setTimeout(() => setIsPaused(false), 8000);
+                    }}
                     className={`h-2 rounded-full transition-all duration-300 ${
                       i === active ? "w-6 bg-primary" : "w-2 bg-primary/20"
                     }`}
@@ -86,7 +131,11 @@ export default function TestimonialsSlider() {
                 ))}
               </div>
               <button
-                onClick={next}
+                onClick={() => {
+                  next();
+                  setIsPaused(true);
+                  setTimeout(() => setIsPaused(false), 8000);
+                }}
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 text-primary transition-colors hover:bg-primary hover:text-white"
                 aria-label="Next"
               >
@@ -110,8 +159,8 @@ function TestimonialCard({
   return (
     <div
       className="
-        rounded-2xl border border-primary/5 bg-primary-light/30 p-8
-        transition-all duration-300 hover:shadow-md hover:shadow-primary/5
+        rounded-2xl border border-primary/5 bg-white p-8
+        transition-all duration-300 hover:shadow-premium
       "
     >
       {/* Stars */}

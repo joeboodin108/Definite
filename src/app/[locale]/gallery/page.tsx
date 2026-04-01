@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import Container from "@/components/ui/Container";
+import PageHero from "@/components/ui/PageHero";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const galleryImages = [
   { src: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600&q=80", category: "dental" },
@@ -32,63 +34,50 @@ export default function GalleryPage() {
 
   return (
     <>
-      {/* Hero Banner */}
-      <section className="relative bg-primary py-32 pt-40">
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-            backgroundSize: "30px 30px",
-          }}
-        />
-        <Container className="relative z-10 text-center">
-          <h1
-            className={`${headingFont} text-4xl font-bold text-white sm:text-5xl`}
-          >
-            {t("title")}
-          </h1>
-          <p className="mt-4 text-lg text-white/70">{t("subtitle")}</p>
-          <div className="mx-auto mt-5 h-[2px] w-12 bg-accent" />
-        </Container>
-      </section>
+      <PageHero
+        variant="immersive"
+        title={t("title")}
+        subtitle={t("subtitle")}
+        image="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80"
+        isArabic={isArabic}
+        headingFont={headingFont}
+      >
+        {/* Filter Tabs inside hero */}
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          {filters.map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setActiveFilter(filter)}
+              className={`
+                rounded-full px-6 py-2 text-sm font-medium
+                transition-all duration-300
+                ${
+                  activeFilter === filter
+                    ? "bg-white text-primary"
+                    : "border border-white/30 text-white/70 hover:border-white hover:text-white"
+                }
+              `}
+            >
+              {t(filter)}
+            </button>
+          ))}
+        </div>
+      </PageHero>
 
-      {/* Gallery Content */}
+      {/* Gallery Grid */}
       <section className="py-20 lg:py-28">
         <Container>
-          {/* Filter Tabs */}
-          <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
-            {filters.map((filter) => (
-              <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                className={`
-                  rounded-full px-6 py-2 text-sm font-medium
-                  transition-all duration-300
-                  ${
-                    activeFilter === filter
-                      ? "bg-primary text-white"
-                      : "border border-primary/20 text-mid hover:border-primary hover:text-primary"
-                  }
-                `}
-              >
-                {t(filter)}
-              </button>
-            ))}
-          </div>
-
-          {/* Grid */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((img, index) => (
-              <div
-                key={index}
-                className="group relative h-72 overflow-hidden rounded-xl"
-              >
-                <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                  style={{ backgroundImage: `url('${img.src}')` }}
-                />
-                <div className="absolute inset-0 bg-primary/0 transition-colors group-hover:bg-primary/20" />
-              </div>
+              <ScrollReveal key={`${img.src}-${index}`} animation="scale-in" delay={index * 60}>
+                <div className="group relative h-72 overflow-hidden rounded-xl">
+                  <div
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                    style={{ backgroundImage: `url('${img.src}')` }}
+                  />
+                  <div className="absolute inset-0 bg-primary/0 transition-colors group-hover:bg-primary/20" />
+                </div>
+              </ScrollReveal>
             ))}
           </div>
         </Container>

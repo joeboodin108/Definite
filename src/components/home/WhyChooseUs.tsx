@@ -1,6 +1,8 @@
 import { useTranslations, useLocale } from "next-intl";
 import { Users, Cpu, Heart, Globe } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
+import ScrollReveal from "@/components/ui/ScrollReveal";
+import GeometricBackground from "@/components/ui/GeometricBackground";
 
 const features = [
   { key: "expertTeam", icon: Users },
@@ -15,12 +17,16 @@ export default function WhyChooseUs() {
   const isArabic = locale === "ar";
 
   return (
-    <section className="py-20 lg:py-28 bg-primary-light">
-      <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <SectionHeading title={t("whyChooseUs")} />
+    <section className="py-20 lg:py-28 bg-primary-light overflow-hidden relative">
+      <GeometricBackground variant="light" />
+      <div className="relative z-10 mx-auto max-w-7xl px-5 lg:px-8">
+        <ScrollReveal>
+          <SectionHeading title={t("whyChooseUs")} label={isArabic ? "لماذا نحن" : "Why Us"} />
+        </ScrollReveal>
 
         <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {features.map(({ key, icon: Icon }) => (
+          {features.map(({ key, icon: Icon }, index) => (
+            <ScrollReveal key={key} animation="fade-up" delay={index * 100}>
             <div
               key={key}
               className="
@@ -60,6 +66,7 @@ export default function WhyChooseUs() {
               {/* Bottom accent on hover */}
               <div className="absolute inset-x-8 bottom-0 h-[2px] bg-accent scale-x-0 transition-transform duration-300 group-hover:scale-x-100 rounded-full" />
             </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

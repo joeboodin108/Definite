@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Link } from "@/lib/navigation";
 import { ArrowRight } from "lucide-react";
 import type { ServiceData, Locale } from "@/types";
@@ -17,16 +18,19 @@ export default function ServiceCard({ service, locale }: ServiceCardProps) {
         group relative flex flex-col overflow-hidden rounded-xl
         bg-white border border-primary/5
         transition-all duration-300
-        hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1
+        hover:shadow-premium hover:border-primary/10
       "
     >
       {/* Image */}
-      <div className="relative h-48 overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-          style={{ backgroundImage: `url('${service.image}')` }}
+      <div className="relative aspect-[4/3] overflow-hidden">
+        <Image
+          src={service.image}
+          alt={service.title[locale]}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
         />
-        <div className="absolute inset-0 bg-primary/20" />
+        <div className="absolute inset-0 bg-primary/5 transition-colors duration-300 group-hover:bg-primary/15" />
       </div>
 
       {/* Content */}
@@ -48,8 +52,8 @@ export default function ServiceCard({ service, locale }: ServiceCardProps) {
         </div>
       </div>
 
-      {/* Bottom accent line */}
-      <div className="absolute inset-x-0 bottom-0 h-[2px] bg-accent scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
+      {/* Left accent border on hover */}
+      <div className={`absolute inset-y-0 w-[3px] bg-accent transition-opacity duration-300 opacity-0 group-hover:opacity-100 ${isArabic ? "end-0" : "start-0"}`} />
     </Link>
   );
 }

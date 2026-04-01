@@ -11,6 +11,7 @@ import {
 import Container from "@/components/ui/Container";
 import ServiceCard from "@/components/services/ServiceCard";
 import { Link } from "@/lib/navigation";
+import Image from "next/image";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import type { Locale } from "@/types";
 
@@ -58,9 +59,13 @@ export default async function ServiceDetailPage({ params }: Props) {
     <>
       {/* Hero */}
       <section className="relative min-h-[50vh] flex items-end overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url('${service.image}')` }}
+        <Image
+          src={service.image}
+          alt={service.title[locale as Locale]}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-top"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-primary/30" />
         <Container className="relative z-10 py-20 pt-40">
@@ -100,7 +105,6 @@ export default async function ServiceDetailPage({ params }: Props) {
                 >
                   {t("whatToExpect")}
                 </h2>
-                <div className="mt-4 h-[2px] w-10 bg-accent" />
                 <ul className="mt-6 space-y-4">
                   {service.benefits[locale as Locale].map((benefit, index) => (
                     <li key={index} className="flex items-start gap-3">
@@ -162,7 +166,6 @@ export default async function ServiceDetailPage({ params }: Props) {
             >
               {t("relatedServices")}
             </h2>
-            <div className="mt-3 h-[2px] w-10 bg-accent" />
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {relatedServices.map((s) => (
                 <ServiceCard

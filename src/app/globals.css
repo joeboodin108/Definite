@@ -48,6 +48,55 @@ html {
   background: #2E1147;
 }
 
+/* Geometric background — clip-path paper planes */
+.shape-wrapper {
+  position: absolute;
+  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.06)) drop-shadow(0 5px 10px rgba(0, 0, 0, 0.03));
+}
+
+.shape {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ffffff 20%, #f1f3f6 100%);
+}
+
+.shape-alt-1 {
+  background: linear-gradient(200deg, #ffffff 40%, #e6e9ed 100%) !important;
+}
+
+.shape-alt-2 {
+  background: linear-gradient(110deg, #ffffff 10%, #f4f6f9 90%) !important;
+}
+
+.shape-alt-3 {
+  background: linear-gradient(300deg, #ffffff 30%, #eaedf1 100%) !important;
+}
+
+.shape-alt-4 {
+  background: linear-gradient(45deg, #f8f9fa 0%, #ffffff 100%) !important;
+}
+
+.w1 { top: -10%; left: -5%; width: 45vw; height: 60vh; z-index: 1; }
+.w1 .shape { clip-path: polygon(0 0, 100% 0, 85% 100%, 0 80%); }
+
+.w2 { top: -20%; right: -10%; width: 65vw; height: 70vh; z-index: 2; }
+.w2 .shape { clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 75%); }
+
+.w3 { top: 15%; left: 10%; width: 65vw; height: 75vh; z-index: 3; }
+.w3 .shape { clip-path: polygon(25% 0, 100% 15%, 75% 100%, 0 85%); }
+
+.w4 { bottom: -15%; left: -10%; width: 55vw; height: 50vh; z-index: 4; }
+.w4 .shape { clip-path: polygon(0 30%, 100% 0, 85% 100%, 0 100%); }
+
+.w5 { top: 20%; right: -15%; width: 50vw; height: 85vh; z-index: 5; }
+.w5 .shape { clip-path: polygon(0 0, 100% 25%, 100% 100%, 25% 100%); }
+
+.w6 { bottom: -5%; right: 15%; width: 60vw; height: 45vh; z-index: 6; }
+.w6 .shape { clip-path: polygon(15% 0, 100% 35%, 100% 100%, 0 100%); }
+
+.w7 { top: 40%; left: -10%; width: 40vw; height: 40vh; z-index: 2; }
+.w7 .shape { clip-path: polygon(0 0, 100% 20%, 80% 100%, 0 100%); }
+
 /* Animation utilities */
 .animate-on-scroll {
   opacity: 0;

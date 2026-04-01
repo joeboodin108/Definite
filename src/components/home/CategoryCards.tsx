@@ -1,6 +1,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/lib/navigation";
 import { ArrowRight } from "lucide-react";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const categories = [
   {
@@ -26,53 +27,66 @@ export default function CategoryCards() {
   return (
     <section className="py-20 lg:py-28 bg-white">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <div className="grid gap-6 md:grid-cols-2">
-          {categories.map(({ key, href, image }) => (
-            <Link
+        {/* Asymmetric layout: first card larger */}
+        <div className="grid gap-6 md:grid-cols-5">
+          {categories.map(({ key, href, image }, index) => (
+            <ScrollReveal
               key={key}
-              href={href}
-              className="
-                group relative flex min-h-[420px] flex-col justify-end
-                overflow-hidden rounded-2xl
-                transition-all duration-500
-                hover:shadow-2xl hover:shadow-primary/10
-              "
+              animation="fade-up"
+              delay={index * 150}
+              className={index === 0 ? "md:col-span-3" : "md:col-span-2"}
             >
-              {/* Background Image */}
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                style={{ backgroundImage: `url('${image}')` }}
-              />
+              <Link
+                href={href}
+                className={`
+                  group relative flex flex-col justify-end
+                  overflow-hidden rounded-2xl
+                  transition-all duration-500
+                  hover:shadow-2xl hover:shadow-primary/10
+                  ${index === 0 ? "min-h-[460px]" : "min-h-[460px] md:min-h-[460px]"}
+                `}
+              >
+                {/* Background Image */}
+                <div
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                  style={{ backgroundImage: `url('${image}')` }}
+                />
 
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent" />
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent" />
 
-              {/* Content */}
-              <div className="relative z-10 p-8 md:p-10">
-                <h3
-                  className={`
-                    ${headingFont} text-3xl md:text-4xl font-bold text-white
-                    leading-tight
-                  `}
-                >
-                  {t(`${key}Title`)}
-                </h3>
-                <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/70">
-                  {t(`${key}Description`)}
-                </p>
+                {/* Content */}
+                <div className="relative z-10 p-8 md:p-10">
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+                    {index === 0
+                      ? isArabic ? "٠١" : "01"
+                      : isArabic ? "٠٢" : "02"}
+                  </p>
+                  <h3
+                    className={`
+                      ${headingFont} text-3xl md:text-4xl font-bold text-white
+                      leading-tight
+                    `}
+                  >
+                    {t(`${key}Title`)}
+                  </h3>
+                  <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/70">
+                    {t(`${key}Description`)}
+                  </p>
 
-                {/* CTA indicator */}
-                <div className="mt-6 inline-flex items-center gap-2 text-accent text-sm font-semibold uppercase tracking-wider">
-                  <span>{t("viewServices")}</span>
-                  <ArrowRight
-                    className={`h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 ${isArabic ? "rtl:rotate-180 rtl:group-hover:-translate-x-1" : ""}`}
-                  />
+                  {/* CTA indicator */}
+                  <div className="mt-6 inline-flex items-center gap-2 text-accent text-sm font-semibold uppercase tracking-wider">
+                    <span>{t("viewServices")}</span>
+                    <ArrowRight
+                      className={`h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 ${isArabic ? "rtl:rotate-180 rtl:group-hover:-translate-x-1" : ""}`}
+                    />
+                  </div>
                 </div>
-              </div>
 
-              {/* Top accent line */}
-              <div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-accent via-accent/50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-            </Link>
+                {/* Top accent line */}
+                <div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-accent via-accent/50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              </Link>
+            </ScrollReveal>
           ))}
         </div>
       </div>

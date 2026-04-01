@@ -3,16 +3,20 @@ import { useLocale } from "next-intl";
 interface SectionHeadingProps {
   title: string;
   subtitle?: string;
+  label?: string;
   centered?: boolean;
   light?: boolean;
+  accent?: boolean;
   className?: string;
 }
 
 export default function SectionHeading({
   title,
   subtitle,
+  label,
   centered = true,
   light = false,
+  accent = false,
   className = "",
 }: SectionHeadingProps) {
   const locale = useLocale();
@@ -21,6 +25,16 @@ export default function SectionHeading({
 
   return (
     <div className={`${centered ? "text-center" : "text-start"} ${className}`}>
+      {label && (
+        <p
+          className={`
+            mb-3 text-xs font-semibold uppercase tracking-[0.2em]
+            ${light ? "text-accent" : "text-accent"}
+          `}
+        >
+          {label}
+        </p>
+      )}
       <h2
         className={`
           ${headingFont} text-3xl font-bold sm:text-4xl lg:text-[2.75rem]
@@ -41,13 +55,14 @@ export default function SectionHeading({
           {subtitle}
         </p>
       )}
-      {/* Decorative accent line */}
-      <div
-        className={`
-          mt-5 h-[2px] w-12 bg-accent
-          ${centered ? "mx-auto" : ""}
-        `}
-      />
+      {accent && (
+        <div
+          className={`
+            mt-5 h-[2px] w-12 bg-accent
+            ${centered ? "mx-auto" : ""}
+          `}
+        />
+      )}
     </div>
   );
 }

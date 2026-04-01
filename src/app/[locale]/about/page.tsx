@@ -2,6 +2,8 @@ import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Container from "@/components/ui/Container";
+import PageHero from "@/components/ui/PageHero";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { Heart, Eye } from "lucide-react";
 
 type Props = {
@@ -30,38 +32,31 @@ export default async function AboutPage({ params }: Props) {
 
   return (
     <>
-      {/* Hero Banner */}
-      <section className="relative bg-primary py-32 pt-40">
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-            backgroundSize: "30px 30px",
-          }}
-        />
-        <Container className="relative z-10 text-center">
-          <h1
-            className={`${headingFont} text-4xl font-bold text-white sm:text-5xl`}
-          >
-            {t("title")}
-          </h1>
-          <p className="mt-4 text-lg text-white/70">{t("subtitle")}</p>
-          <div className="mx-auto mt-5 h-[2px] w-12 bg-accent" />
-        </Container>
-      </section>
+      <PageHero
+        variant="split"
+        title={t("title")}
+        subtitle={t("subtitle")}
+        image="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600&q=80"
+        isArabic={isArabic}
+        headingFont={headingFont}
+      />
 
       {/* Clinic Story */}
       <section className="py-20 lg:py-28">
         <Container>
+          <ScrollReveal>
           <div className="mx-auto max-w-3xl text-center">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+              {isArabic ? "رحلتنا" : "Our Journey"}
+            </p>
             <h2 className={`${headingFont} text-3xl font-bold text-primary sm:text-4xl`}>
               {t("storyTitle")}
             </h2>
-            <div className="mx-auto mt-4 h-[2px] w-12 bg-accent" />
             <p className="mt-8 text-base leading-relaxed text-dark/80">
               {t("storyText")}
             </p>
           </div>
+          </ScrollReveal>
         </Container>
       </section>
 
@@ -77,8 +72,7 @@ export default async function AboutPage({ params }: Props) {
               <h3 className={`mt-5 ${headingFont} text-2xl font-bold text-primary`}>
                 {t("missionTitle")}
               </h3>
-              <div className="mt-3 h-[2px] w-8 bg-accent" />
-              <p className="mt-5 text-sm leading-relaxed text-mid">
+              <p className="mt-4 text-sm leading-relaxed text-mid">
                 {t("missionText")}
               </p>
             </div>
@@ -91,7 +85,6 @@ export default async function AboutPage({ params }: Props) {
               <h3 className={`mt-5 ${headingFont} text-2xl font-bold text-primary`}>
                 {t("visionTitle")}
               </h3>
-              <div className="mt-3 h-[2px] w-8 bg-accent" />
               <p className="mt-5 text-sm leading-relaxed text-mid">
                 {t("visionText")}
               </p>
@@ -107,7 +100,6 @@ export default async function AboutPage({ params }: Props) {
             <h2 className={`${headingFont} text-3xl font-bold text-primary sm:text-4xl`}>
               {t("focusTitle")}
             </h2>
-            <div className="mx-auto mt-4 h-[2px] w-12 bg-accent" />
             <p className="mt-8 text-base leading-relaxed text-dark/80">
               {t("focusText")}
             </p>
@@ -127,10 +119,12 @@ export default async function AboutPage({ params }: Props) {
       <section className="py-20 lg:py-28 bg-primary-light/50">
         <Container>
           <div className="text-center">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+              {isArabic ? "داخل العيادة" : "Inside the Clinic"}
+            </p>
             <h2 className={`${headingFont} text-3xl font-bold text-primary sm:text-4xl`}>
               {t("facilityTitle")}
             </h2>
-            <div className="mx-auto mt-4 h-[2px] w-12 bg-accent" />
           </div>
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {facilityImages.map((image, index) => (

@@ -20,6 +20,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const isArabic = locale === "ar";
 
+  const isHomePage = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -79,7 +80,7 @@ export default function Navbar() {
             href="/"
             className={`
               group relative py-5 transition-colors duration-300
-              ${scrolled ? "text-primary" : "text-white"}
+              ${scrolled || isHomePage ? "text-primary" : "text-white"}
             `}
           >
             <span
@@ -109,10 +110,10 @@ export default function Navbar() {
                   transition-colors duration-300
                   ${
                     isActive(href)
-                      ? scrolled
+                      ? scrolled || isHomePage
                         ? "text-primary"
                         : "text-white"
-                      : scrolled
+                      : scrolled || isHomePage
                         ? "text-mid hover:text-primary"
                         : "text-white/75 hover:text-white"
                   }
@@ -137,7 +138,7 @@ export default function Navbar() {
 
           {/* Right side — Desktop */}
           <div className="hidden lg:flex items-center gap-3">
-            <LocaleSwitcher scrolled={scrolled} />
+            <LocaleSwitcher scrolled={scrolled || isHomePage} />
             <Link
               href="/book"
               className={`
@@ -159,7 +160,7 @@ export default function Navbar() {
             onClick={() => setMobileOpen(true)}
             className={`
               lg:hidden p-2 rounded-lg transition-colors duration-300
-              ${scrolled ? "text-primary hover:bg-primary-light" : "text-white hover:bg-white/10"}
+              ${scrolled || isHomePage ? "text-primary hover:bg-primary-light" : "text-white hover:bg-white/10"}
             `}
             aria-label="Open menu"
           >
