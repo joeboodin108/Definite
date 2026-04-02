@@ -5,6 +5,7 @@ import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
 import BookingForm from "@/components/book/BookingForm";
 
+
 type Props = {
   params: Promise<{ locale: string }>;
 };
@@ -33,8 +34,9 @@ export default async function BookPage({ params }: Props) {
       />
 
       {/* Booking Form */}
-      <section className="py-20 lg:py-28">
-        <Container>
+      <section className="py-20 lg:py-28 relative overflow-hidden">
+
+        <Container className="relative z-10">
           <BookingForm />
         </Container>
       </section>

@@ -20,7 +20,8 @@ export default function Navbar() {
   const pathname = usePathname();
   const isArabic = locale === "ar";
 
-  const isHomePage = pathname === "/";
+  // All pages use light hero backgrounds, so always use dark navbar text
+  const isLightHero = true;
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -80,7 +81,7 @@ export default function Navbar() {
             href="/"
             className={`
               group relative py-5 transition-colors duration-300
-              ${scrolled || isHomePage ? "text-primary" : "text-white"}
+              ${scrolled || isLightHero ? "text-primary" : "text-white"}
             `}
           >
             <span
@@ -110,10 +111,10 @@ export default function Navbar() {
                   transition-colors duration-300
                   ${
                     isActive(href)
-                      ? scrolled || isHomePage
+                      ? scrolled || isLightHero
                         ? "text-primary"
                         : "text-white"
-                      : scrolled || isHomePage
+                      : scrolled || isLightHero
                         ? "text-mid hover:text-primary"
                         : "text-white/75 hover:text-white"
                   }
@@ -138,7 +139,7 @@ export default function Navbar() {
 
           {/* Right side — Desktop */}
           <div className="hidden lg:flex items-center gap-3">
-            <LocaleSwitcher scrolled={scrolled || isHomePage} />
+            <LocaleSwitcher scrolled={scrolled || isLightHero} />
             <Link
               href="/book"
               className={`
@@ -160,7 +161,7 @@ export default function Navbar() {
             onClick={() => setMobileOpen(true)}
             className={`
               lg:hidden p-2 rounded-lg transition-colors duration-300
-              ${scrolled || isHomePage ? "text-primary hover:bg-primary-light" : "text-white hover:bg-white/10"}
+              ${scrolled || isLightHero ? "text-primary hover:bg-primary-light" : "text-white hover:bg-white/10"}
             `}
             aria-label="Open menu"
           >
@@ -185,13 +186,7 @@ export default function Navbar() {
           fixed top-0 z-[70] h-full w-[300px] bg-white
           shadow-2xl transition-transform duration-400 ease-out lg:hidden
           ${isArabic ? "start-0" : "end-0"}
-          ${
-            mobileOpen
-              ? "translate-x-0"
-              : isArabic
-                ? "-translate-x-full"
-                : "translate-x-full"
-          }
+          ${mobileOpen ? "translate-x-0" : "translate-x-full"}
         `}
       >
         {/* Drawer Header */}

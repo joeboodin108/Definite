@@ -5,6 +5,7 @@ import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
 import { Phone, MapPin, Clock, MessageCircle } from "lucide-react";
 
+
 export async function generateMetadata({
   params,
 }: {
@@ -55,8 +56,9 @@ export default async function ContactPage({ params }: Props) {
       />
 
       {/* Contact Content */}
-      <section className="py-20 lg:py-28">
-        <Container>
+      <section className="py-20 lg:py-28 relative overflow-hidden">
+
+        <Container className="relative z-10">
           {/* Contact Info */}
           <div className="mx-auto max-w-2xl">
             <div className="grid gap-8 sm:grid-cols-2">

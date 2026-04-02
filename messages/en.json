@@ -21,6 +21,8 @@
   },
   "Home": {
     "heroTitle": "Your Smile, Perfected. Your Skin, Transformed.",
+    "heroTitleLine1": "Your Smile, Perfected.",
+    "heroTitleLine2": "Your Skin, Transformed.",
     "heroSubtitle": "Premium dental and facial aesthetic treatments at one of Jordan's most advanced clinics in Abdoun, Amman.",
     "bookAppointment": "Book Appointment",
     "exploreServices": "Explore Services",
@@ -41,6 +43,7 @@
     "specialties": "Specialties",
     "expertTeamStat": "Expert Team",
     "location": "Abdoun, Amman",
+    "freeParking": "Free Parking",
     "testimonials": "What Our Patients Say",
     "viewServices": "View Services"
   },

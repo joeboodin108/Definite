@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
-import GeometricBackground from "@/components/ui/GeometricBackground";
+
 import SectionHeading from "@/components/ui/SectionHeading";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import type { TestimonialData } from "@/types";
@@ -58,7 +58,6 @@ export default function TestimonialsSlider() {
 
   return (
     <section className="py-20 lg:py-28 bg-gradient-to-b from-white to-primary-light/30 relative overflow-hidden">
-      <GeometricBackground variant="light" />
       {/* Decorative quote mark */}
       <div
         className="absolute top-8 start-1/2 -translate-x-1/2 select-none pointer-events-none font-cormorant text-[12rem] leading-none text-primary/[0.03]"

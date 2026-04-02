@@ -6,6 +6,7 @@ import PageHero from "@/components/ui/PageHero";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { Heart, Eye } from "lucide-react";
 
+
 type Props = {
   params: Promise<{ locale: string }>;
 };
@@ -42,8 +43,9 @@ export default async function AboutPage({ params }: Props) {
       />
 
       {/* Clinic Story */}
-      <section className="py-20 lg:py-28">
-        <Container>
+      <section className="py-20 lg:py-28 relative overflow-hidden">
+
+        <Container className="relative z-10">
           <ScrollReveal>
           <div className="mx-auto max-w-3xl text-center">
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
@@ -61,8 +63,9 @@ export default async function AboutPage({ params }: Props) {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-20 lg:py-28 bg-primary-light">
-        <Container>
+      <section className="py-20 lg:py-28 bg-primary-light relative overflow-hidden">
+
+        <Container className="relative z-10">
           <div className="grid gap-8 md:grid-cols-2">
             {/* Mission */}
             <div className="rounded-2xl bg-white p-10 shadow-sm">
@@ -94,8 +97,9 @@ export default async function AboutPage({ params }: Props) {
       </section>
 
       {/* Services Focus */}
-      <section className="py-20 lg:py-28">
-        <Container>
+      <section className="py-20 lg:py-28 relative overflow-hidden">
+
+        <Container className="relative z-10">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className={`${headingFont} text-3xl font-bold text-primary sm:text-4xl`}>
               {t("focusTitle")}
@@ -116,8 +120,9 @@ export default async function AboutPage({ params }: Props) {
       </section>
 
       {/* Facility Photos */}
-      <section className="py-20 lg:py-28 bg-primary-light/50">
-        <Container>
+      <section className="py-20 lg:py-28 bg-primary-light/50 relative overflow-hidden">
+
+        <Container className="relative z-10">
           <div className="text-center">
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
               {isArabic ? "داخل العيادة" : "Inside the Clinic"}

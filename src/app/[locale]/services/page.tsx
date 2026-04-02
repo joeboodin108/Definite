@@ -7,6 +7,7 @@ import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
+
 type Props = {
   params: Promise<{ locale: string }>;
 };
@@ -48,8 +49,9 @@ export default async function ServicesPage({ params }: Props) {
       />
 
       {/* Category Cards */}
-      <section className="py-20 lg:py-28">
-        <Container>
+      <section className="py-20 lg:py-28 relative overflow-hidden">
+
+        <Container className="relative z-10">
           <div className="grid gap-8 md:grid-cols-2">
             {categoryCards.map(({ key, href, image }, index) => (
               <ScrollReveal key={key} animation="fade-up" delay={index * 150}>

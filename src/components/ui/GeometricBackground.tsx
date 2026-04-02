@@ -1,19 +1,7 @@
-interface GeometricBackgroundProps {
-  variant?: "hero" | "light" | "dark";
-}
-
-export default function GeometricBackground({
-  variant = "hero",
-}: GeometricBackgroundProps) {
-  const variantStyles: Record<string, string> = {
-    hero: "opacity-100",
-    light: "opacity-50",
-    dark: "opacity-[0.08] mix-blend-overlay",
-  };
-
+export default function GeometricBackground() {
   return (
     <div
-      className={`absolute inset-0 z-0 pointer-events-none overflow-hidden ${variantStyles[variant]}`}
+      className="fixed inset-0 z-0 pointer-events-none overflow-hidden opacity-50"
       aria-hidden="true"
     >
       <div className="shape-wrapper w1"><div className="shape" /></div>

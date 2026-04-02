@@ -7,6 +7,7 @@ import { cormorant, inter, cairo } from "@/lib/fonts";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FloatingWhatsApp from "@/components/layout/FloatingWhatsApp";
+import GeometricBackground from "@/components/ui/GeometricBackground";
 
 type Props = {
   children: React.ReactNode;
@@ -63,6 +64,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale} dir={isArabic ? "rtl" : "ltr"} className={fontVars}>
       <body className={`${bodyFont} antialiased bg-white text-dark`}>
         <NextIntlClientProvider messages={messages}>
+          <GeometricBackground />
           <Navbar />
           <main className="min-h-screen">{children}</main>
           <Footer />

@@ -31,7 +31,7 @@ export default function Footer() {
   return (
     <>
       {/* Pre-footer CTA Banner */}
-      <section className="bg-primary-light py-16">
+      <section className="relative z-10 bg-primary-light py-16">
         <div className="mx-auto max-w-7xl px-5 lg:px-8 text-center">
           <h2 className={`${headingFont} text-3xl font-bold text-primary sm:text-4xl`}>
             {isArabic

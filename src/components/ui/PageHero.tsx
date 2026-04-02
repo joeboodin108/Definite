@@ -1,5 +1,4 @@
 import Container from "./Container";
-import GeometricBackground from "./GeometricBackground";
 
 interface PageHeroProps {
   title: string;
@@ -10,6 +9,13 @@ interface PageHeroProps {
   headingFont?: string;
   children?: React.ReactNode;
 }
+
+const purpleGlowStyle = {
+  background: "#ffffff",
+  backgroundImage: `radial-gradient(circle at top left, rgba(173, 109, 244, 0.5), transparent 70%)`,
+  filter: "blur(80px)",
+  backgroundRepeat: "no-repeat",
+} as const;
 
 export default function PageHero({
   title,
@@ -22,18 +28,19 @@ export default function PageHero({
 }: PageHeroProps) {
   if (variant === "split") {
     return (
-      <section className="relative bg-gradient-to-br from-primary via-primary to-primary-dark pt-32 pb-20 overflow-hidden">
-        <GeometricBackground variant="dark" />
+      <section className="relative bg-white pt-32 pb-20 overflow-hidden">
+        <div className="absolute inset-0 z-0" aria-hidden="true" style={purpleGlowStyle} />
+
         <Container className="relative z-10">
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <div className={isArabic ? "text-start" : "text-start"}>
               <h1
-                className={`${headingFont} text-4xl font-bold text-white sm:text-5xl leading-tight`}
+                className={`${headingFont} text-4xl font-bold text-primary sm:text-5xl leading-tight`}
               >
                 {title}
               </h1>
               {subtitle && (
-                <p className="mt-5 max-w-lg text-base leading-relaxed text-white/60">
+                <p className="mt-5 max-w-lg text-base leading-relaxed text-mid">
                   {subtitle}
                 </p>
               )}
@@ -46,14 +53,12 @@ export default function PageHero({
                     className="absolute inset-0 bg-cover bg-center"
                     style={{ backgroundImage: `url('${image}')` }}
                   />
-                  <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10" />
+                  <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-primary/10" />
                 </div>
               </div>
             )}
           </div>
         </Container>
-        {/* Subtle bottom fade */}
-        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent" />
       </section>
     );
   }
@@ -61,28 +66,26 @@ export default function PageHero({
   if (variant === "immersive") {
     return (
       <section className="relative min-h-[45vh] flex items-end overflow-hidden">
-        <GeometricBackground variant="dark" />
+        <div className="absolute inset-0 z-0" aria-hidden="true" style={purpleGlowStyle} />
+
         {image && (
           <>
             <div
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url('${image}')` }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-white via-white/70 to-white/40" />
           </>
-        )}
-        {!image && (
-          <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-primary-dark" />
         )}
         <Container className="relative z-10 pb-10 pt-40">
           <div className="text-center">
             <h1
-              className={`${headingFont} text-4xl font-bold text-white sm:text-5xl`}
+              className={`${headingFont} text-4xl font-bold text-primary sm:text-5xl`}
             >
               {title}
             </h1>
             {subtitle && (
-              <p className="mt-4 text-base text-white/60">{subtitle}</p>
+              <p className="mt-4 text-base text-mid">{subtitle}</p>
             )}
           </div>
           {children && <div className="mt-8">{children}</div>}
@@ -93,16 +96,16 @@ export default function PageHero({
 
   // Default: minimal variant
   return (
-    <section className="relative bg-gradient-to-br from-primary to-primary-dark py-20 pt-32 overflow-hidden">
-      <GeometricBackground variant="dark" />
+    <section className="relative bg-white py-20 pt-32 overflow-hidden">
+      <div className="absolute inset-0 z-0" aria-hidden="true" style={purpleGlowStyle} />
       <Container className="relative z-10">
         <h1
-          className={`${headingFont} text-3xl font-bold text-white sm:text-4xl`}
+          className={`${headingFont} text-3xl font-bold text-primary sm:text-4xl`}
         >
           {title}
         </h1>
         {subtitle && (
-          <p className="mt-3 max-w-xl text-base text-white/60">{subtitle}</p>
+          <p className="mt-3 max-w-xl text-base text-mid">{subtitle}</p>
         )}
         {children}
       </Container>

@@ -2,7 +2,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { Users, Cpu, Heart, Globe } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import GeometricBackground from "@/components/ui/GeometricBackground";
+
 
 const features = [
   { key: "expertTeam", icon: Users },
@@ -17,8 +17,7 @@ export default function WhyChooseUs() {
   const isArabic = locale === "ar";
 
   return (
-    <section className="py-20 lg:py-28 bg-primary-light overflow-hidden relative">
-      <GeometricBackground variant="light" />
+    <section className="py-20 lg:py-28 overflow-hidden relative">
       <div className="relative z-10 mx-auto max-w-7xl px-5 lg:px-8">
         <ScrollReveal>
           <SectionHeading title={t("whyChooseUs")} label={isArabic ? "لماذا نحن" : "Why Us"} />
@@ -30,12 +29,14 @@ export default function WhyChooseUs() {
             <div
               key={key}
               className="
-                group relative rounded-2xl bg-white p-8
-                text-center shadow-sm
+                group relative h-full rounded-2xl p-[1px]
+                bg-gradient-to-b from-primary/20 via-primary/5 to-primary/20
                 transition-all duration-300
-                hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1
+                hover:shadow-xl hover:shadow-primary/8 hover:-translate-y-1
+                hover:from-primary/40 hover:via-primary/10 hover:to-primary/40
               "
             >
+              <div className="h-full rounded-2xl bg-white/95 backdrop-blur-sm p-8 text-center transition-colors duration-300 group-hover:bg-white">
               {/* Icon */}
               <div
                 className="
@@ -62,9 +63,7 @@ export default function WhyChooseUs() {
               <p className="mt-3 text-sm leading-relaxed text-mid">
                 {t(`${key}Desc`)}
               </p>
-
-              {/* Bottom accent on hover */}
-              <div className="absolute inset-x-8 bottom-0 h-[2px] bg-accent scale-x-0 transition-transform duration-300 group-hover:scale-x-100 rounded-full" />
+              </div>
             </div>
             </ScrollReveal>
           ))}

@@ -28,13 +28,12 @@ export default function CategoryCards() {
     <section className="py-20 lg:py-28 bg-white">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         {/* Asymmetric layout: first card larger */}
-        <div className="grid gap-6 md:grid-cols-5">
+        <div className="grid gap-6 md:grid-cols-2">
           {categories.map(({ key, href, image }, index) => (
             <ScrollReveal
               key={key}
               animation="fade-up"
               delay={index * 150}
-              className={index === 0 ? "md:col-span-3" : "md:col-span-2"}
             >
               <Link
                 href={href}
@@ -53,7 +52,7 @@ export default function CategoryCards() {
                 />
 
                 {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/30 to-transparent" />
 
                 {/* Content */}
                 <div className="relative z-10 p-8 md:p-10">

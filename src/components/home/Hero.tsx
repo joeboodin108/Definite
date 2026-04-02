@@ -1,7 +1,5 @@
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/lib/navigation";
-import { ChevronDown } from "lucide-react";
-import GeometricBackground from "@/components/ui/GeometricBackground";
 
 export default function Hero() {
   const t = useTranslations("Home");
@@ -11,7 +9,6 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-[100vh] flex items-center overflow-hidden">
-      <GeometricBackground variant="hero" />
       {/* Vertical accent line — left edge (LTR) or right edge (RTL) */}
       <div
         className={`absolute top-1/4 bottom-1/4 w-[2px] bg-gradient-to-b from-transparent via-accent to-transparent opacity-25 z-[1] ${
@@ -21,7 +18,7 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-7xl px-5 lg:px-8 py-32 w-full">
-        <div className="max-w-3xl">
+        <div className={isArabic ? "max-w-4xl" : "max-w-3xl"}>
           {/* Small label */}
           <div
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/5 px-4 py-1.5 backdrop-blur-sm animate-fade-in"
@@ -40,7 +37,8 @@ export default function Hero() {
               animate-slide-up
             `}
           >
-            {t("heroTitle")}
+            <span className="block">{t("heroTitleLine1")}</span>
+            <span className={`block ${isArabic ? "mt-4" : ""}`}>{t("heroTitleLine2")}</span>
           </h1>
 
           {/* Subtitle — delayed entrance */}
@@ -116,15 +114,6 @@ export default function Hero() {
       {/* Bottom fade to white */}
       <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent" />
 
-      {/* Scroll indicator — improved */}
-      <div className="absolute inset-x-0 bottom-10 z-10 flex justify-center">
-        <div className="flex flex-col items-center gap-1 text-primary/30 animate-pulse">
-          <span className="text-[10px] uppercase tracking-[0.2em]">
-            {isArabic ? "مرر للأسفل" : "Scroll"}
-          </span>
-          <ChevronDown className="h-4 w-4" />
-        </div>
-      </div>
     </section>
   );
 }

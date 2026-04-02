@@ -21,6 +21,8 @@
   },
   "Home": {
     "heroTitle": "ابتسامتك في أفضل حالاتها. بشرتك بأجمل صورها.",
+    "heroTitleLine1": "ابتسامتك في أفضل حالاتها.",
+    "heroTitleLine2": "بشرتك بأجمل صورها.",
     "heroSubtitle": "علاجات أسنان وتجميل متقدمة في واحدة من أحدث العيادات في عبدون، عمّان.",
     "bookAppointment": "حجز موعد",
     "exploreServices": "استكشف خدماتنا",
@@ -41,6 +43,7 @@
     "specialties": "تخصصات",
     "expertTeamStat": "فريق متخصص",
     "location": "عبدون، عمّان",
+    "freeParking": "مواقف مجانية",
     "testimonials": "ماذا يقول مرضانا",
     "viewServices": "عرض الخدمات"
   },
