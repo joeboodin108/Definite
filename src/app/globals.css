@@ -97,6 +97,15 @@ html {
 .w7 { top: 40%; left: -10%; width: 40vw; height: 40vh; z-index: 2; }
 .w7 .shape { clip-path: polygon(0 0, 100% 20%, 80% 100%, 0 100%); }
 
+/* Hide scrollbar for carousels */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Animation utilities */
 .animate-on-scroll {
   opacity: 0;

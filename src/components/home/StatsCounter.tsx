@@ -11,17 +11,18 @@ interface Stat {
   suffix: string;
   labelKey: string;
   icon?: "award" | "mappin" | "parking";
+  format?: boolean;
 }
 
 const stats: Stat[] = [
-  { value: 1000, suffix: "+", labelKey: "happyPatients" },
-  { value: 2, suffix: "", labelKey: "specialties" },
+  { value: 13519, suffix: "+", labelKey: "patientsServed", format: true },
+  { value: 26, suffix: "", labelKey: "services" },
   { value: 1, suffix: "", labelKey: "expertTeamStat", icon: "award" },
   { value: 1, suffix: "", labelKey: "location", icon: "mappin" },
   { value: 1, suffix: "", labelKey: "freeParking", icon: "parking" },
 ];
 
-function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
+function AnimatedNumber({ value, suffix, format }: { value: number; suffix: string; format?: boolean }) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const hasAnimated = useRef(false);
@@ -58,7 +59,7 @@ function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
 
   return (
     <span ref={ref}>
-      {count}
+      {format ? count.toLocaleString() : count}
       {suffix}
     </span>
   );
@@ -86,7 +87,7 @@ export default function StatsCounter() {
       <div className="relative z-10 mx-auto max-w-7xl px-5 lg:px-8">
         <ScrollReveal>
           <div className="grid grid-cols-2 gap-8 lg:grid-cols-5">
-            {stats.map(({ value, suffix, labelKey, icon }, index) => {
+            {stats.map(({ value, suffix, labelKey, icon, format }, index) => {
               const IconComponent = icon ? iconMap[icon] : null;
               return (
                 <div
@@ -97,11 +98,11 @@ export default function StatsCounter() {
                       : ""
                   }`}
                 >
-                  <div className="text-4xl font-bold text-primary sm:text-5xl lg:text-6xl font-cormorant">
+                  <div className={`font-bold text-primary font-inter ${format ? "text-3xl sm:text-4xl lg:text-5xl" : "text-4xl sm:text-5xl lg:text-6xl"}`}>
                     {IconComponent ? (
                       <IconComponent className="mx-auto h-10 w-10 text-accent" strokeWidth={1.5} />
                     ) : (
-                      <AnimatedNumber value={value} suffix={suffix} />
+                      <AnimatedNumber value={value} suffix={suffix} format={format} />
                     )}
                   </div>
                   <p className="mt-3 text-sm text-mid tracking-wide">

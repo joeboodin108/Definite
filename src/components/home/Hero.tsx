@@ -89,16 +89,16 @@ export default function Hero() {
             style={{ animationDelay: "700ms" }}
           >
             <div className="flex items-center gap-2 text-mid">
-              <span className="text-sm font-semibold text-primary">1000+</span>
+              <span className="text-sm font-semibold text-primary">13,519+</span>
               <span className="text-xs uppercase tracking-wider">
-                {isArabic ? "مريض سعيد" : "Happy Patients"}
+                {isArabic ? "مريض تمت خدمته" : "Patients Served"}
               </span>
             </div>
             <div className="h-4 w-[1px] bg-primary/15" />
             <div className="flex items-center gap-2 text-mid">
-              <span className="text-sm font-semibold text-primary">2</span>
+              <span className="text-sm font-semibold text-primary">26</span>
               <span className="text-xs uppercase tracking-wider">
-                {isArabic ? "تخصصات" : "Specialties"}
+                {isArabic ? "خدمة" : "Services"}
               </span>
             </div>
             <div className="h-4 w-[1px] bg-primary/15" />

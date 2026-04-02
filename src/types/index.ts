@@ -21,7 +21,6 @@ export interface ServiceData {
 export interface TestimonialData {
   name: LocalizedString;
   quote: LocalizedString;
-  service: string;
   rating: number;
 }
 

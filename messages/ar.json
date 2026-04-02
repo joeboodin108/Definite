@@ -40,7 +40,9 @@
     "bilingualSupport": "دعم ثنائي اللغة",
     "bilingualSupportDesc": "خدمة كاملة بالعربية والإنجليزية لراحتك.",
     "happyPatients": "مريض سعيد",
+    "patientsServed": "مريض تمت خدمته",
     "specialties": "تخصصات",
+    "services": "خدمة",
     "expertTeamStat": "فريق متخصص",
     "location": "عبدون، عمّان",
     "freeParking": "مواقف مجانية",
@@ -125,5 +127,10 @@
     "learnMore": "اعرف المزيد",
     "viewAll": "عرض الكل",
     "backToHome": "العودة للرئيسية"
+  },
+  "Emergency": {
+    "label": "طوارئ 24/7",
+    "ariaLabel": "اتصل بخط طوارئ الأسنان",
+    "call": "اتصل الآن"
   }
 }

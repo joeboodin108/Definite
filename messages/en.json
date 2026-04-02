@@ -40,7 +40,9 @@
     "bilingualSupport": "Bilingual Support",
     "bilingualSupportDesc": "Full service in both English and Arabic for your comfort.",
     "happyPatients": "Happy Patients",
+    "patientsServed": "Patients Served",
     "specialties": "Specialties",
+    "services": "Services",
     "expertTeamStat": "Expert Team",
     "location": "Abdoun, Amman",
     "freeParking": "Free Parking",
@@ -125,5 +127,10 @@
     "learnMore": "Learn More",
     "viewAll": "View All",
     "backToHome": "Back to Home"
+  },
+  "Emergency": {
+    "label": "Emergency 24/7",
+    "ariaLabel": "Call emergency dental line",
+    "call": "Call Now"
   }
 }

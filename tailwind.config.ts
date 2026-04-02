@@ -33,6 +33,7 @@ const config: Config = {
         "count-up": "countUp 2s ease-out forwards",
         "slide-down": "slideDown 0.6s ease-out forwards",
         "scale-in": "scaleIn 0.5s ease-out forwards",
+        heartbeat: "heartbeat 1.5s ease-in-out infinite",
       },
       boxShadow: {
         premium: "0 4px 30px rgba(61,26,92,0.06)",
@@ -53,6 +54,14 @@ const config: Config = {
         scaleIn: {
           "0%": { opacity: "0", transform: "scale(0.95)" },
           "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        heartbeat: {
+          "0%": { transform: "scale(1)", opacity: "1" },
+          "14%": { transform: "scale(1.3)", opacity: "1" },
+          "28%": { transform: "scale(1)", opacity: "0.7" },
+          "42%": { transform: "scale(1.25)", opacity: "1" },
+          "56%": { transform: "scale(1)", opacity: "0.6" },
+          "100%": { transform: "scale(1)", opacity: "0.6" },
         },
       },
     },

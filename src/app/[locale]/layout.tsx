@@ -7,6 +7,7 @@ import { cormorant, inter, cairo } from "@/lib/fonts";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FloatingWhatsApp from "@/components/layout/FloatingWhatsApp";
+import FloatingEmergency from "@/components/layout/FloatingEmergency";
 import GeometricBackground from "@/components/ui/GeometricBackground";
 
 type Props = {
@@ -69,6 +70,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           <main className="min-h-screen">{children}</main>
           <Footer />
           <FloatingWhatsApp />
+          <FloatingEmergency />
         </NextIntlClientProvider>
       </body>
     </html>
