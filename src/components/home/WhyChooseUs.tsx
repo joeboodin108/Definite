@@ -30,10 +30,10 @@ export default function WhyChooseUs() {
               key={key}
               className="
                 group relative h-full rounded-2xl p-[1px]
-                bg-gradient-to-b from-primary/20 via-primary/5 to-primary/20
+                bg-gradient-to-b from-gray-200 via-gray-100 to-gray-200
                 transition-all duration-300
-                hover:shadow-xl hover:shadow-primary/8 hover:-translate-y-1
-                hover:from-primary/40 hover:via-primary/10 hover:to-primary/40
+                hover:shadow-xl hover:shadow-black/5 hover:-translate-y-1
+                hover:from-gray-300 hover:via-gray-100 hover:to-gray-300
               "
             >
               <div className="h-full rounded-2xl bg-white/95 backdrop-blur-sm p-8 text-center transition-colors duration-300 group-hover:bg-white">

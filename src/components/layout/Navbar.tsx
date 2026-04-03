@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname } from "@/lib/navigation";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import LocaleSwitcher from "./LocaleSwitcher";
 
 const NAV_LINKS = [
@@ -80,10 +81,17 @@ export default function Navbar() {
           <Link
             href="/"
             className={`
-              group relative py-5 transition-colors duration-300
+              group relative flex items-center gap-2.5 py-5 transition-colors duration-300
               ${scrolled || isLightHero ? "text-primary" : "text-white"}
             `}
           >
+            <Image
+              src="/images/logo.jpg"
+              alt="Definite Dental Clinics"
+              width={38}
+              height={38}
+              className="rounded-full"
+            />
             <span
               className={`
                 text-2xl font-bold tracking-tight
@@ -191,11 +199,20 @@ export default function Navbar() {
       >
         {/* Drawer Header */}
         <div className="flex items-center justify-between border-b border-primary-light px-6 py-5">
-          <span
-            className={`text-xl font-bold text-primary ${isArabic ? "font-cairo" : "font-cormorant"}`}
-          >
-            Definite
-          </span>
+          <div className="flex items-center gap-2">
+            <Image
+              src="/images/logo.jpg"
+              alt="Definite Dental Clinics"
+              width={32}
+              height={32}
+              className="rounded-full"
+            />
+            <span
+              className={`text-xl font-bold text-primary ${isArabic ? "font-cairo" : "font-cormorant"}`}
+            >
+              Definite
+            </span>
+          </div>
           <button
             onClick={() => setMobileOpen(false)}
             className="rounded-lg p-2 text-mid hover:bg-primary-light hover:text-primary transition-colors"

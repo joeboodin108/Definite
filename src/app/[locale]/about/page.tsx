@@ -63,7 +63,7 @@ export default async function AboutPage({ params }: Props) {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-20 lg:py-28 bg-primary-light relative overflow-hidden">
+      <section className="py-20 lg:py-28 bg-surface relative overflow-hidden">
 
         <Container className="relative z-10">
           <div className="grid gap-8 md:grid-cols-2">
@@ -120,7 +120,7 @@ export default async function AboutPage({ params }: Props) {
       </section>
 
       {/* Facility Photos */}
-      <section className="py-20 lg:py-28 bg-primary-light/50 relative overflow-hidden">
+      <section className="py-20 lg:py-28 bg-surface relative overflow-hidden">
 
         <Container className="relative z-10">
           <div className="text-center">

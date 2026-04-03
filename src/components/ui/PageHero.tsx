@@ -10,9 +10,9 @@ interface PageHeroProps {
   children?: React.ReactNode;
 }
 
-const purpleGlowStyle = {
+const glowStyle = {
   background: "#ffffff",
-  backgroundImage: `radial-gradient(circle at top left, rgba(173, 109, 244, 0.5), transparent 70%)`,
+  backgroundImage: `radial-gradient(circle at top left, rgba(180, 180, 190, 0.35), transparent 70%)`,
   filter: "blur(80px)",
   backgroundRepeat: "no-repeat",
 } as const;
@@ -29,7 +29,7 @@ export default function PageHero({
   if (variant === "split") {
     return (
       <section className="relative bg-white pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 z-0" aria-hidden="true" style={purpleGlowStyle} />
+        <div className="absolute inset-0 z-0" aria-hidden="true" style={glowStyle} />
 
         <Container className="relative z-10">
           <div className="grid items-center gap-10 lg:grid-cols-2">
@@ -66,7 +66,7 @@ export default function PageHero({
   if (variant === "immersive") {
     return (
       <section className="relative min-h-[45vh] flex items-end overflow-hidden">
-        <div className="absolute inset-0 z-0" aria-hidden="true" style={purpleGlowStyle} />
+        <div className="absolute inset-0 z-0" aria-hidden="true" style={glowStyle} />
 
         {image && (
           <>
@@ -97,7 +97,7 @@ export default function PageHero({
   // Default: minimal variant
   return (
     <section className="relative bg-white py-20 pt-32 overflow-hidden">
-      <div className="absolute inset-0 z-0" aria-hidden="true" style={purpleGlowStyle} />
+      <div className="absolute inset-0 z-0" aria-hidden="true" style={glowStyle} />
       <Container className="relative z-10">
         <h1
           className={`${headingFont} text-3xl font-bold text-primary sm:text-4xl`}

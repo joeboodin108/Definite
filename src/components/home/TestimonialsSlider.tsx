@@ -91,9 +91,6 @@ const testimonials: TestimonialData[] = [
   },
 ];
 
-// Split into two rows
-const row1 = testimonials.slice(0, 5);
-const row2 = testimonials.slice(5);
 
 function TestimonialCard({
   item,
@@ -128,12 +125,10 @@ function TestimonialCard({
 
 function MarqueeRow({
   data,
-  reverse = false,
   speed = 30,
   locale,
 }: {
   data: TestimonialData[];
-  reverse?: boolean;
   speed?: number;
   locale: "en" | "ar";
 }) {
@@ -145,12 +140,10 @@ function MarqueeRow({
       <div className="pointer-events-none absolute left-0 top-0 h-full w-10 md:w-32 z-10 bg-gradient-to-r from-white to-transparent" />
 
       <div
-        className={`flex transform-gpu w-max ${
-          reverse ? "pt-2 pb-4 md:pt-3 md:pb-6" : "pt-4 pb-2 md:pt-6 md:pb-3"
-        }`}
+        className="flex transform-gpu w-max py-4 md:py-6"
         style={{
           animation: `marqueeScroll ${speed}s linear infinite`,
-          animationDirection: reverse ? "reverse" : "normal",
+          animationDirection: "normal",
         }}
       >
         {tripled.map((item, i) => (
@@ -199,8 +192,7 @@ export default function TestimonialsSlider() {
               100% { transform: translateX(calc(-100% / 3)); }
             }
           `}</style>
-          <MarqueeRow data={row1} reverse={false} speed={35} locale={locale} />
-          <MarqueeRow data={row2} reverse={true} speed={30} locale={locale} />
+          <MarqueeRow data={testimonials} speed={55} locale={locale} />
         </div>
       </div>
     </section>

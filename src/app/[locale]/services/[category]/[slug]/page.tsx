@@ -159,7 +159,7 @@ export default async function ServiceDetailPage({ params }: Props) {
 
       {/* Related Services */}
       {relatedServices.length > 0 && (
-        <section className="border-t border-primary/5 py-16 lg:py-24 bg-primary-light/30">
+        <section className="border-t border-primary/5 py-16 lg:py-24 bg-surface">
           <Container>
             <h2
               className={`${headingFont} text-2xl font-bold text-primary sm:text-3xl`}

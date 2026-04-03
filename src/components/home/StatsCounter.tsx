@@ -76,12 +76,12 @@ export default function StatsCounter() {
 
   return (
     <section className="relative py-20 bg-white overflow-hidden">
-      {/* Soft lavender center glow */}
+      {/* Soft center glow */}
       <div
         className="absolute inset-0 z-0 pointer-events-none"
         aria-hidden="true"
         style={{
-          backgroundImage: `radial-gradient(circle at center, #c4b5fd, transparent)`,
+          backgroundImage: `radial-gradient(circle at center, #d4d4d8, transparent)`,
         }}
       />
       <div className="relative z-10 mx-auto max-w-7xl px-5 lg:px-8">

@@ -73,7 +73,8 @@ npm run lint      # ESLint check
 
 - Primary: `#3D1A5C` (Deep Purple — 90% usage)
 - Accent: `#B8962E` (Gold — 10%, only 1-2 CTAs, rare dividers, NOT for backgrounds/cards)
-- Light: `#F3EEF9` (subtle section backgrounds)
+- Light: `#F0EDF5` (subtle purple tint for small UI — icon containers, hover states, sidebar panels)
+- Surface: `#F5F5F5` (light gray for section backgrounds)
 - Dark: `#2D2D2D` (body text), Mid: `#555555` (secondary text)
 
 ## RTL / Bilingual
