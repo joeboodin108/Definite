@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { Link } from "@/lib/navigation";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
 import ScrollReveal from "@/components/ui/ScrollReveal";
@@ -15,19 +16,25 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Services" });
-  return { title: t("title") };
+  const isArabic = locale === "ar";
+  return {
+    title: t("title"),
+    description: isArabic
+      ? "استكشف خدمات طب الأسنان وتجميل الوجه في عيادات ديفنت. علاجات متقدمة بأيدي خبراء متخصصين."
+      : "Explore dental and facial aesthetic services at Definite Dental Clinics. Advanced treatments by expert specialists.",
+  };
 }
 
 const categoryCards = [
   {
     key: "dental" as const,
     href: "/services/dental-treatments" as const,
-    image: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95",
   },
   {
     key: "facial" as const,
     href: "/services/facial-treatments" as const,
-    image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881",
   },
 ];
 
@@ -64,10 +71,15 @@ export default async function ServicesPage({ params }: Props) {
                     hover:shadow-2xl hover:shadow-primary/10
                   "
                 >
-                  <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                    style={{ backgroundImage: `url('${image}')` }}
-                  />
+                  <div className="absolute inset-0 overflow-hidden">
+                    <Image
+                      src={image}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent" />
                   <div className="relative z-10 p-8 md:p-10">
                     <h2

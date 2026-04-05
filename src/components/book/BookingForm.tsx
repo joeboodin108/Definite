@@ -30,7 +30,6 @@ export default function BookingForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Booking submitted:", { ...formData, category });
     setSubmitted(true);
   };
 

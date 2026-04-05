@@ -13,7 +13,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Contact" });
-  return { title: t("title") };
+  const isArabic = locale === "ar";
+  return {
+    title: t("title"),
+    description: isArabic
+      ? "تواصل مع عيادات ديفنت لطب الأسنان في عبدون، عمّان. اتصل بنا على 079 5 919 919 أو زورنا."
+      : "Contact Definite Dental Clinics in Abdoun, Amman. Call us at 079 5 919 919 or visit our clinic.",
+  };
 }
 
 function InstagramIcon({ className }: { className?: string }) {

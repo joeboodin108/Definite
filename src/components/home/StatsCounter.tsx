@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { Award, MapPin, CircleParking } from "lucide-react";
 
@@ -22,43 +22,35 @@ const stats: Stat[] = [
   { value: 1, suffix: "", labelKey: "freeParking", icon: "parking" },
 ];
 
-function AnimatedNumber({ value, suffix, format }: { value: number; suffix: string; format?: boolean }) {
+function AnimatedNumber({ value, suffix, format, shouldAnimate }: { value: number; suffix: string; format?: boolean; shouldAnimate: boolean }) {
   const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
   const hasAnimated = useRef(false);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+    if (!shouldAnimate || hasAnimated.current) return;
+    hasAnimated.current = true;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated.current) {
-          hasAnimated.current = true;
-          const duration = 2000;
-          const steps = 60;
-          const increment = value / steps;
-          let current = 0;
-          const timer = setInterval(() => {
-            current += increment;
-            if (current >= value) {
-              setCount(value);
-              clearInterval(timer);
-            } else {
-              setCount(Math.floor(current));
-            }
-          }, duration / steps);
-        }
-      },
-      { threshold: 0.5 }
-    );
+    const duration = 2000;
+    let start: number | null = null;
 
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [value]);
+    function step(timestamp: number) {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(eased * value));
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        setCount(value);
+      }
+    }
+
+    requestAnimationFrame(step);
+  }, [shouldAnimate, value]);
 
   return (
-    <span ref={ref}>
+    <span>
       {format ? count.toLocaleString() : count}
       {suffix}
     </span>
@@ -73,6 +65,23 @@ const iconMap = {
 
 export default function StatsCounter() {
   const t = useTranslations("Home");
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const handleIntersect = useCallback((entries: IntersectionObserverEntry[]) => {
+    if (entries[0].isIntersecting) {
+      setIsVisible(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(handleIntersect, { threshold: 0.5 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [handleIntersect]);
 
   return (
     <section className="relative py-20 bg-white overflow-hidden">
@@ -86,7 +95,7 @@ export default function StatsCounter() {
       />
       <div className="relative z-10 mx-auto max-w-7xl px-5 lg:px-8">
         <ScrollReveal>
-          <div className="grid grid-cols-2 gap-8 lg:grid-cols-5">
+          <div ref={containerRef} className="grid grid-cols-2 gap-8 lg:grid-cols-5">
             {stats.map(({ value, suffix, labelKey, icon, format }, index) => {
               const IconComponent = icon ? iconMap[icon] : null;
               return (
@@ -102,7 +111,7 @@ export default function StatsCounter() {
                     {IconComponent ? (
                       <IconComponent className="mx-auto h-10 w-10 text-accent" strokeWidth={1.5} />
                     ) : (
-                      <AnimatedNumber value={value} suffix={suffix} format={format} />
+                      <AnimatedNumber value={value} suffix={suffix} format={format} shouldAnimate={isVisible} />
                     )}
                   </div>
                   <p className="mt-3 text-sm text-mid tracking-wide">

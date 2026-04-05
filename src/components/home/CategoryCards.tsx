@@ -1,6 +1,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/lib/navigation";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const categories = [
@@ -8,13 +9,13 @@ const categories = [
     key: "dental" as const,
     href: "/services/dental-treatments",
     image:
-      "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&q=80",
+      "https://images.unsplash.com/photo-1606811841689-23dfddce3e95",
   },
   {
     key: "facial" as const,
     href: "/services/facial-treatments",
     image:
-      "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&q=80",
+      "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881",
   },
 ];
 
@@ -46,10 +47,15 @@ export default function CategoryCards() {
                 `}
               >
                 {/* Background Image */}
-                <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                  style={{ backgroundImage: `url('${image}')` }}
-                />
+                <div className="absolute inset-0 overflow-hidden">
+                  <Image
+                    src={image}
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
 
                 {/* Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/30 to-transparent" />

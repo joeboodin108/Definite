@@ -126,7 +126,10 @@
     "bookNow": "احجز الآن",
     "learnMore": "اعرف المزيد",
     "viewAll": "عرض الكل",
-    "backToHome": "العودة للرئيسية"
+    "backToHome": "العودة للرئيسية",
+    "soon": "قريباً",
+    "bookingComingSoonTitle": "قريباً",
+    "bookingComingSoon": "الحجز الإلكتروني قادم قريباً. يرجى التواصل معنا عبر واتساب أو الهاتف لحجز موعدك."
   },
   "Emergency": {
     "label": "طوارئ 24/7",

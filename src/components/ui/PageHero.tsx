@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Container from "./Container";
 
 interface PageHeroProps {
@@ -49,9 +50,12 @@ export default function PageHero({
             {image && (
               <div className="hidden lg:block">
                 <div className="relative mx-auto h-72 w-full max-w-md overflow-hidden rounded-2xl">
-                  <div
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: `url('${image}')` }}
+                  <Image
+                    src={image}
+                    alt=""
+                    fill
+                    sizes="(max-width: 1024px) 0px, 448px"
+                    className="object-cover"
                   />
                   <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-primary/10" />
                 </div>
@@ -70,9 +74,13 @@ export default function PageHero({
 
         {image && (
           <>
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url('${image}')` }}
+            <Image
+              src={image}
+              alt=""
+              fill
+              sizes="100vw"
+              priority
+              className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-white via-white/70 to-white/40" />
           </>

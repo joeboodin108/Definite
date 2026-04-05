@@ -1,6 +1,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/lib/navigation";
 import Image from "next/image";
+import SoonBadge from "@/components/ui/SoonBadge";
 
 export default function Hero() {
   const t = useTranslations("Home");
@@ -72,20 +73,18 @@ export default function Hero() {
               className={`${isArabic ? "mt-12" : "mt-10"} flex flex-wrap items-center gap-4 opacity-0 animate-slide-up`}
               style={{ animationDelay: "400ms" }}
             >
-              <Link
-                href="/book"
+              <span
                 className="
                   inline-flex items-center gap-2 rounded-full
-                  bg-primary px-8 py-3.5
-                  text-[0.82rem] font-semibold uppercase tracking-[0.1em] text-white
-                  shadow-lg shadow-primary/30
-                  transition-all duration-300
-                  hover:bg-primary-dark hover:shadow-xl hover:-translate-y-[1px]
-                  active:translate-y-0
+                  bg-primary/50 px-8 py-3.5
+                  text-[0.82rem] font-semibold uppercase tracking-[0.1em] text-white/80
+                  shadow-lg shadow-primary/15
+                  cursor-default
                 "
               >
                 {t("bookAppointment")}
-              </Link>
+                <SoonBadge />
+              </span>
               <Link
                 href="/services"
                 className="

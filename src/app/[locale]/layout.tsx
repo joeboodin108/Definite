@@ -35,6 +35,10 @@ export async function generateMetadata({
     description: isArabic
       ? "علاجات أسنان وتجميل متقدمة في عبدون، عمّان، الأردن. فريق متخصص وتقنيات حديثة."
       : "Premium dental and facial aesthetic treatments in Abdoun, Amman, Jordan. Expert team and advanced technology.",
+    openGraph: {
+      locale: isArabic ? "ar_JO" : "en_US",
+      alternateLocale: isArabic ? "en_US" : "ar_JO",
+    },
     alternates: {
       languages: {
         en: "/en",

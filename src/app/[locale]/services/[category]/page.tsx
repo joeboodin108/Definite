@@ -25,7 +25,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, category } = await params;
   const t = await getTranslations({ locale, namespace: "Services" });
   const titleKey = category === "dental-treatments" ? "dental" : "facial";
-  return { title: t(`${titleKey}Title`) };
+  const isArabic = locale === "ar";
+  const description =
+    category === "dental-treatments"
+      ? isArabic
+        ? "علاجات الأسنان المتقدمة في عيادات ديفنت. تجميل، زراعة، تقويم، تبييض والمزيد."
+        : "Advanced dental treatments at Definite Dental Clinics. Veneers, implants, braces, whitening and more."
+      : isArabic
+        ? "علاجات تجميل الوجه في عيادات ديفنت. بوتوكس، فيلر، بروفايلو، خيوط ذهبية والمزيد."
+        : "Facial aesthetic treatments at Definite Dental Clinics. Botox, fillers, Profhilo, golden threads and more.";
+  return { title: t(`${titleKey}Title`), description };
 }
 
 export function generateStaticParams() {

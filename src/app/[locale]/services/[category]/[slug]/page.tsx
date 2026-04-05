@@ -14,6 +14,7 @@ import { Link } from "@/lib/navigation";
 import Image from "next/image";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import type { Locale } from "@/types";
+import SoonBadge from "@/components/ui/SoonBadge";
 
 type Props = {
   params: Promise<{ locale: string; category: string; slug: string }>;
@@ -127,17 +128,16 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <p className="mt-3 text-sm text-mid">
                   {service.shortDescription[locale as Locale]}
                 </p>
-                <Link
-                  href="/book"
+                <span
                   className="
-                    mt-6 block w-full rounded-full bg-primary py-3
-                    text-center text-sm font-semibold uppercase tracking-wider text-white
-                    transition-all duration-300
-                    hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/20
+                    mt-6 flex items-center justify-center w-full rounded-full bg-primary/50 py-3
+                    text-sm font-semibold uppercase tracking-wider text-white/70
+                    cursor-default
                   "
                 >
                   {t("bookService")}
-                </Link>
+                  <SoonBadge />
+                </span>
                 <a
                   href="https://wa.me/962795919919"
                   target="_blank"

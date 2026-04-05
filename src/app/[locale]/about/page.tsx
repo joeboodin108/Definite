@@ -1,6 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
 import ScrollReveal from "@/components/ui/ScrollReveal";
@@ -14,14 +15,20 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "About" });
-  return { title: t("title") };
+  const isArabic = locale === "ar";
+  return {
+    title: t("title"),
+    description: isArabic
+      ? "تعرف على عيادات ديفنت لطب الأسنان. فريق طبي متخصص وتقنيات حديثة في عبدون، عمّان."
+      : "Learn about Definite Dental Clinics. Expert medical team and advanced technology in Abdoun, Amman.",
+  };
 }
 
 const facilityImages = [
-  "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600&q=80",
-  "https://images.unsplash.com/photo-1629909615184-74f495363b67?w=600&q=80",
-  "https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=600&q=80",
-  "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=600&q=80",
+  "https://images.unsplash.com/photo-1629909613654-28e377c37b09",
+  "https://images.unsplash.com/photo-1629909615184-74f495363b67",
+  "https://images.unsplash.com/photo-1631549916768-4119b2e5f926",
+  "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5",
 ];
 
 export default async function AboutPage({ params }: Props) {
@@ -37,7 +44,7 @@ export default async function AboutPage({ params }: Props) {
         variant="split"
         title={t("title")}
         subtitle={t("subtitle")}
-        image="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600&q=80"
+        image="https://images.unsplash.com/photo-1629909613654-28e377c37b09"
         isArabic={isArabic}
         headingFont={headingFont}
       />
@@ -137,9 +144,12 @@ export default async function AboutPage({ params }: Props) {
                 key={index}
                 className="group relative h-64 overflow-hidden rounded-xl"
               >
-                <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                  style={{ backgroundImage: `url('${image}')` }}
+                <Image
+                  src={image}
+                  alt=""
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-primary/10 transition-colors group-hover:bg-primary/20" />
               </div>

@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname } from "@/lib/navigation";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import LocaleSwitcher from "./LocaleSwitcher";
+import SoonBadge from "@/components/ui/SoonBadge";
 
 const NAV_LINKS = [
   { href: "/", key: "home" },
@@ -25,13 +26,19 @@ export default function Navbar() {
   const isLightHero = true;
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const ticking = useRef(false);
 
   const handleScroll = useCallback(() => {
-    setScrolled(window.scrollY > 40);
+    if (ticking.current) return;
+    ticking.current = true;
+    requestAnimationFrame(() => {
+      setScrolled(window.scrollY > 40);
+      ticking.current = false;
+    });
   }, []);
 
   useEffect(() => {
-    handleScroll();
+    setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
@@ -59,7 +66,7 @@ export default function Navbar() {
       <header
         className={`
           fixed inset-x-0 top-0 z-50
-          transition-all duration-500 ease-out
+          transition-[background-color,box-shadow] duration-500 ease-out
           ${
             scrolled
               ? "bg-white/95 backdrop-blur-md shadow-[0_1px_20px_rgba(61,26,92,0.08)]"
@@ -110,58 +117,73 @@ export default function Navbar() {
 
           {/* Desktop Navigation — Center */}
           <div className="hidden lg:flex items-center gap-1">
-            {NAV_LINKS.map(({ href, key }) => (
-              <Link
-                key={key}
-                href={href}
-                className={`
-                  relative px-4 py-2 text-[0.82rem] font-medium uppercase tracking-[0.12em]
-                  transition-colors duration-300
-                  ${
-                    isActive(href)
-                      ? scrolled || isLightHero
-                        ? "text-primary"
-                        : "text-white"
-                      : scrolled || isLightHero
-                        ? "text-mid hover:text-primary"
-                        : "text-white/75 hover:text-white"
-                  }
-                `}
-              >
-                {t(key)}
-                {/* Active indicator — thin line */}
-                <span
+            {NAV_LINKS.map(({ href, key }) => {
+              if (key === "book") {
+                return (
+                  <span
+                    key={key}
+                    className={`
+                      relative px-4 py-2 text-[0.82rem] font-medium uppercase tracking-[0.12em]
+                      cursor-default inline-flex items-center
+                      ${scrolled || isLightHero ? "text-mid/50" : "text-white/40"}
+                    `}
+                  >
+                    {t(key)}
+                    <SoonBadge size="sm" />
+                  </span>
+                );
+              }
+
+              return (
+                <Link
+                  key={key}
+                  href={href}
                   className={`
-                    absolute inset-x-4 -bottom-0.5 h-[1.5px]
-                    transition-all duration-300
+                    relative px-4 py-2 text-[0.82rem] font-medium uppercase tracking-[0.12em]
+                    transition-colors duration-300
                     ${
                       isActive(href)
-                        ? "bg-accent scale-x-100"
-                        : "bg-accent scale-x-0"
+                        ? scrolled || isLightHero
+                          ? "text-primary"
+                          : "text-white"
+                        : scrolled || isLightHero
+                          ? "text-mid hover:text-primary"
+                          : "text-white/75 hover:text-white"
                     }
                   `}
-                />
-              </Link>
-            ))}
+                >
+                  {t(key)}
+                  {/* Active indicator — thin line */}
+                  <span
+                    className={`
+                      absolute inset-x-4 -bottom-0.5 h-[1.5px]
+                      transition-all duration-300
+                      ${
+                        isActive(href)
+                          ? "bg-accent scale-x-100"
+                          : "bg-accent scale-x-0"
+                      }
+                    `}
+                  />
+                </Link>
+              );
+            })}
           </div>
 
           {/* Right side — Desktop */}
           <div className="hidden lg:flex items-center gap-3">
             <LocaleSwitcher scrolled={scrolled || isLightHero} />
-            <Link
-              href="/book"
+            <span
               className={`
                 relative overflow-hidden rounded-full px-6 py-2.5
                 text-[0.8rem] font-semibold uppercase tracking-[0.1em]
-                transition-all duration-300
-                bg-primary text-white
-                hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/20
-                hover:-translate-y-[1px]
-                active:translate-y-0
+                bg-primary/50 text-white/70 cursor-default
+                inline-flex items-center
               `}
             >
               {t("book")}
-            </Link>
+              <SoonBadge size="sm" />
+            </span>
           </div>
 
           {/* Mobile Hamburger */}
@@ -224,38 +246,54 @@ export default function Navbar() {
 
         {/* Drawer Links */}
         <div className="flex flex-col py-4">
-          {NAV_LINKS.map(({ href, key }) => (
-            <Link
-              key={key}
-              href={href}
-              className={`
-                px-6 py-3.5 text-[0.9rem] font-medium tracking-wide
-                transition-all duration-200
-                ${
-                  isActive(href)
-                    ? "bg-primary-light text-primary border-s-[3px] border-accent"
-                    : "text-dark hover:bg-primary-light/50 hover:text-primary border-s-[3px] border-transparent"
-                }
-              `}
-            >
-              {t(key)}
-            </Link>
-          ))}
+          {NAV_LINKS.map(({ href, key }) => {
+            if (key === "book") {
+              return (
+                <span
+                  key={key}
+                  className="px-6 py-3.5 text-[0.9rem] font-medium tracking-wide text-dark/40 cursor-default border-s-[3px] border-transparent inline-flex items-center"
+                >
+                  {t(key)}
+                  <SoonBadge size="sm" />
+                </span>
+              );
+            }
+
+            return (
+              <Link
+                key={key}
+                href={href}
+                className={`
+                  px-6 py-3.5 text-[0.9rem] font-medium tracking-wide
+                  transition-all duration-200
+                  ${
+                    isActive(href)
+                      ? "bg-primary-light text-primary border-s-[3px] border-accent"
+                      : "text-dark hover:bg-primary-light/50 hover:text-primary border-s-[3px] border-transparent"
+                  }
+                `}
+              >
+                {t(key)}
+              </Link>
+            );
+          })}
         </div>
 
         {/* Drawer Footer */}
         <div className="absolute inset-x-0 bottom-0 border-t border-primary-light p-6 space-y-3">
           <LocaleSwitcher scrolled className="w-full justify-center" />
-          <Link
-            href="/book"
+          <span
             className="
-              block w-full rounded-full bg-primary py-3
-              text-center text-sm font-semibold uppercase tracking-widest text-white
-              hover:bg-primary-dark transition-colors
+              block w-full rounded-full bg-primary/50 py-3
+              text-center text-sm font-semibold uppercase tracking-widest text-white/70
+              cursor-default
             "
           >
-            {t("book")}
-          </Link>
+            <span className="inline-flex items-center justify-center">
+              {t("book")}
+              <SoonBadge size="sm" />
+            </span>
+          </span>
         </div>
       </div>
     </>

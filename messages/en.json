@@ -126,7 +126,10 @@
     "bookNow": "Book Now",
     "learnMore": "Learn More",
     "viewAll": "View All",
-    "backToHome": "Back to Home"
+    "backToHome": "Back to Home",
+    "soon": "Soon",
+    "bookingComingSoonTitle": "Coming Soon",
+    "bookingComingSoon": "Online booking is coming soon. Please contact us via WhatsApp or phone to book your appointment."
   },
   "Emergency": {
     "label": "Emergency 24/7",

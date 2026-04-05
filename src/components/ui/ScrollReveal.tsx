@@ -36,6 +36,31 @@ const animationStyles: Record<Animation, { from: React.CSSProperties; to: React.
   },
 };
 
+// Shared observer pool — one observer per unique threshold value
+const observerMap = new Map<number, IntersectionObserver>();
+const callbackMap = new Map<Element, (isIntersecting: boolean) => void>();
+
+function getSharedObserver(threshold: number): IntersectionObserver {
+  let observer = observerMap.get(threshold);
+  if (!observer) {
+    observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const cb = callbackMap.get(entry.target);
+          if (cb && entry.isIntersecting) {
+            cb(true);
+            observer!.unobserve(entry.target);
+            callbackMap.delete(entry.target);
+          }
+        }
+      },
+      { threshold }
+    );
+    observerMap.set(threshold, observer);
+  }
+  return observer;
+}
+
 export default function ScrollReveal({
   children,
   animation = "fade-up",
@@ -51,18 +76,14 @@ export default function ScrollReveal({
     const el = ref.current;
     if (!el) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold }
-    );
-
+    const observer = getSharedObserver(threshold);
+    callbackMap.set(el, () => setIsVisible(true));
     observer.observe(el);
-    return () => observer.disconnect();
+
+    return () => {
+      observer.unobserve(el);
+      callbackMap.delete(el);
+    };
   }, [threshold]);
 
   const styles = animationStyles[animation];

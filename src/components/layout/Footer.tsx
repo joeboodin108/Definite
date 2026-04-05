@@ -1,6 +1,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/lib/navigation";
 import { Phone, MapPin } from "lucide-react";
+import SoonBadge from "@/components/ui/SoonBadge";
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -43,18 +44,16 @@ export default function Footer() {
               ? "احجز موعدك اليوم واكتشف الفرق في عيادات ديفنت."
               : "Book your appointment today and experience the Definite difference."}
           </p>
-          <Link
-            href="/book"
+          <span
             className="
-              mt-8 inline-block rounded-full bg-primary px-10 py-3.5
-              text-sm font-semibold uppercase tracking-wider text-white
-              transition-all duration-300
-              hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/20
-              hover:-translate-y-[1px]
+              mt-8 inline-flex items-center rounded-full bg-primary/50 px-10 py-3.5
+              text-sm font-semibold uppercase tracking-wider text-white/70
+              cursor-default
             "
           >
             {tCommon("bookNow")}
-          </Link>
+            <SoonBadge />
+          </span>
         </div>
       </section>
 
@@ -80,19 +79,33 @@ export default function Footer() {
               </h3>
               <nav className="mt-5 flex flex-col gap-3">
                 {(["home", "about", "services", "gallery", "book", "contact"] as const).map(
-                  (key) => (
-                    <Link
-                      key={key}
-                      href={
-                        key === "home"
-                          ? "/"
-                          : `/${key === "book" ? "book" : key}`
-                      }
-                      className="text-sm text-[#C4B0DB]/80 transition-colors hover:text-accent"
-                    >
-                      {tNav(key)}
-                    </Link>
-                  )
+                  (key) => {
+                    if (key === "book") {
+                      return (
+                        <span
+                          key={key}
+                          className="text-sm text-[#C4B0DB]/40 cursor-default inline-flex items-center"
+                        >
+                          {tNav(key)}
+                          <SoonBadge size="sm" />
+                        </span>
+                      );
+                    }
+
+                    return (
+                      <Link
+                        key={key}
+                        href={
+                          key === "home"
+                            ? "/"
+                            : `/${key}`
+                        }
+                        className="text-sm text-[#C4B0DB]/80 transition-colors hover:text-accent"
+                      >
+                        {tNav(key)}
+                      </Link>
+                    );
+                  }
                 )}
               </nav>
             </div>
