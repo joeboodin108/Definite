@@ -6,7 +6,6 @@ import { Link, usePathname } from "@/lib/navigation";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import LocaleSwitcher from "./LocaleSwitcher";
-import SoonBadge from "@/components/ui/SoonBadge";
 
 const NAV_LINKS = [
   { href: "/", key: "home" },
@@ -118,22 +117,6 @@ export default function Navbar() {
           {/* Desktop Navigation — Center */}
           <div className="hidden lg:flex items-center gap-1">
             {NAV_LINKS.map(({ href, key }) => {
-              if (key === "book") {
-                return (
-                  <span
-                    key={key}
-                    className={`
-                      relative px-4 py-2 text-[0.82rem] font-medium uppercase tracking-[0.12em]
-                      cursor-default inline-flex items-center
-                      ${scrolled || isLightHero ? "text-mid/50" : "text-white/40"}
-                    `}
-                  >
-                    {t(key)}
-                    <SoonBadge size="sm" />
-                  </span>
-                );
-              }
-
               return (
                 <Link
                   key={key}
@@ -173,17 +156,18 @@ export default function Navbar() {
           {/* Right side — Desktop */}
           <div className="hidden lg:flex items-center gap-3">
             <LocaleSwitcher scrolled={scrolled || isLightHero} />
-            <span
+            <Link
+              href="/book"
               className={`
                 relative overflow-hidden rounded-full px-6 py-2.5
                 text-[0.8rem] font-semibold uppercase tracking-[0.1em]
-                bg-primary/50 text-white/70 cursor-default
-                inline-flex items-center
+                bg-primary text-white
+                transition-all duration-300
+                hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/20
               `}
             >
               {t("book")}
-              <SoonBadge size="sm" />
-            </span>
+            </Link>
           </div>
 
           {/* Mobile Hamburger */}
@@ -247,18 +231,6 @@ export default function Navbar() {
         {/* Drawer Links */}
         <div className="flex flex-col py-4">
           {NAV_LINKS.map(({ href, key }) => {
-            if (key === "book") {
-              return (
-                <span
-                  key={key}
-                  className="px-6 py-3.5 text-[0.9rem] font-medium tracking-wide text-dark/40 cursor-default border-s-[3px] border-transparent inline-flex items-center"
-                >
-                  {t(key)}
-                  <SoonBadge size="sm" />
-                </span>
-              );
-            }
-
             return (
               <Link
                 key={key}
@@ -282,18 +254,17 @@ export default function Navbar() {
         {/* Drawer Footer */}
         <div className="absolute inset-x-0 bottom-0 border-t border-primary-light p-6 space-y-3">
           <LocaleSwitcher scrolled className="w-full justify-center" />
-          <span
+          <Link
+            href="/book"
             className="
-              block w-full rounded-full bg-primary/50 py-3
-              text-center text-sm font-semibold uppercase tracking-widest text-white/70
-              cursor-default
+              block w-full rounded-full bg-primary py-3
+              text-center text-sm font-semibold uppercase tracking-widest text-white
+              transition-all duration-300
+              hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/20
             "
           >
-            <span className="inline-flex items-center justify-center">
-              {t("book")}
-              <SoonBadge size="sm" />
-            </span>
-          </span>
+            {t("book")}
+          </Link>
         </div>
       </div>
     </>
