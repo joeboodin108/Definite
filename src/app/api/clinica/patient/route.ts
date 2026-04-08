@@ -57,9 +57,10 @@ export async function POST(req: NextRequest) {
       pid: "",
       pname: name,
     });
-  } catch {
+  } catch (err) {
+    console.error("Clinica patient error:", err);
     return NextResponse.json(
-      { error: "Service unavailable" },
+      { error: "Service unavailable", detail: String(err) },
       { status: 503 }
     );
   }

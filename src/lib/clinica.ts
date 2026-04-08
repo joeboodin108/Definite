@@ -1,8 +1,18 @@
-const BASE_URL = process.env.CLINICA_BASE_URL!;
-const USERNAME = process.env.CLINICA_USERNAME!;
-const PASSWORD = process.env.CLINICA_PASSWORD!;
-const CALENDAR_ID = process.env.CLINICA_CALENDAR_ID!;
-const ACCOUNT_ID = process.env.CLINICA_ACCOUNT_ID!;
+const BASE_URL = process.env.CLINICA_BASE_URL || "";
+const USERNAME = process.env.CLINICA_USERNAME || "";
+const PASSWORD = process.env.CLINICA_PASSWORD || "";
+const CALENDAR_ID = process.env.CLINICA_CALENDAR_ID || "";
+const ACCOUNT_ID = process.env.CLINICA_ACCOUNT_ID || "";
+
+if (!BASE_URL || !USERNAME || !PASSWORD || !CALENDAR_ID || !ACCOUNT_ID) {
+  console.error("Missing Clinica env vars:", {
+    BASE_URL: !!BASE_URL,
+    USERNAME: !!USERNAME,
+    PASSWORD: !!PASSWORD,
+    CALENDAR_ID: !!CALENDAR_ID,
+    ACCOUNT_ID: !!ACCOUNT_ID,
+  });
+}
 
 interface ClinicaSession {
   sessid: string;
