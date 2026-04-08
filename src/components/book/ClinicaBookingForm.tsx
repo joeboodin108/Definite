@@ -87,26 +87,13 @@ export default function ClinicaBookingForm() {
     const res = await fetch("/api/clinica/doctors");
     const data = await res.json();
 
-    if (Array.isArray(data)) {
-      // Map whatever format Clinica returns
-      const mapped = data.map((d: Record<string, unknown>) => ({
-        hid: String(d.hid || d.id || d.clinic_id || ""),
-        name: String(
-          d.name || d.clinic_name || d.doctor_name || d.title || ""
-        ),
+    const list = Array.isArray(data) ? data : (data.doctors || data.clinics || data.data || []);
+    if (Array.isArray(list)) {
+      const mapped = list.map((d: Record<string, unknown>) => ({
+        hid: String(d.DrId || d.hid || d.id || ""),
+        name: String(d.DrName || d.name || d.doctor_name || ""),
       }));
       setDoctors(mapped);
-    } else if (data.doctors || data.clinics || data.data) {
-      const list = data.doctors || data.clinics || data.data;
-      if (Array.isArray(list)) {
-        const mapped = list.map((d: Record<string, unknown>) => ({
-          hid: String(d.hid || d.id || d.clinic_id || ""),
-          name: String(
-            d.name || d.clinic_name || d.doctor_name || d.title || ""
-          ),
-        }));
-        setDoctors(mapped);
-      }
     }
   }
 
@@ -131,21 +118,17 @@ export default function ClinicaBookingForm() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ hid: selectedDoctor, date: selectedDate }),
     })
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) return [];
+        return r.json();
+      })
       .then((data) => {
-        if (Array.isArray(data)) {
-          const mapped = data.map((s: Record<string, unknown>) => ({
-            time: String(s.time || s.slot || s.apptime || s),
+        const list = Array.isArray(data) ? data : (data.slots || data.times || data.data || []);
+        if (Array.isArray(list)) {
+          const mapped = list.map((s: Record<string, unknown>) => ({
+            time: String(s.Time || s.time || s.slot || s),
           }));
           setTimeSlots(mapped);
-        } else if (data.slots || data.times || data.data) {
-          const list = data.slots || data.times || data.data;
-          if (Array.isArray(list)) {
-            const mapped = list.map((s: Record<string, unknown>) => ({
-              time: String(s.time || s.slot || s.apptime || s),
-            }));
-            setTimeSlots(mapped);
-          }
         }
       })
       .catch(() => setError(t("errorGeneral")))
