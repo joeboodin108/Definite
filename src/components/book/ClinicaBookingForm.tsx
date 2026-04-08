@@ -62,15 +62,8 @@ export default function ClinicaBookingForm() {
         return;
       }
 
-      if (data.exists && data.patient) {
-        // Extract pid from response
-        const pid =
-          data.patient.pid ||
-          data.patient.patient_id ||
-          (Array.isArray(data.patient) ? data.patient[0]?.pid : null);
-        if (pid) {
-          setPatientId(String(pid));
-        }
+      if (data.exists && data.pid) {
+        setPatientId(String(data.pid));
       }
 
       // Move to doctor selection and fetch doctors

@@ -11,24 +11,25 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Normalize phone: add 962 prefix if needed
     const normalizedPhone = normalizeJordanPhone(phone);
 
-    // Check if patient exists
+    // Check if patient already exists
     const existing = await checkPatient(normalizedPhone);
-    if (existing.ok && existing.data?.flag === true) {
-      // Patient exists — return their info
+    if (existing.ok && Array.isArray(existing.data) && existing.data.length > 0) {
+      const patient = existing.data[0];
       return NextResponse.json({
         exists: true,
-        patient: existing.data,
+        pid: patient.pid,
+        pname: patient.pname,
       });
     }
 
-    // Patient doesn't exist — create if name provided
+    // Patient doesn't exist — need name to create
     if (!name) {
       return NextResponse.json({ exists: false });
     }
 
+    // Create the profile
     const created = await createPatient(normalizedPhone, name);
     if (!created.ok) {
       return NextResponse.json(
@@ -37,10 +38,24 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Clinica doesn't return pid on create — fetch it
+    const refetch = await checkPatient(normalizedPhone);
+    if (refetch.ok && Array.isArray(refetch.data) && refetch.data.length > 0) {
+      const patient = refetch.data[0];
+      return NextResponse.json({
+        exists: true,
+        created: true,
+        pid: patient.pid,
+        pname: patient.pname,
+      });
+    }
+
+    // Created but couldn't fetch pid — still proceed
     return NextResponse.json({
       exists: true,
       created: true,
-      patient: created.data,
+      pid: "",
+      pname: name,
     });
   } catch {
     return NextResponse.json(
