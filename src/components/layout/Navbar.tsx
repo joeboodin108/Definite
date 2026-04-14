@@ -92,7 +92,7 @@ export default function Navbar() {
             `}
           >
             <Image
-              src="/images/logo.jpg"
+              src="/images/logo.webp"
               alt="Definite Dental Clinics"
               width={38}
               height={38}
@@ -207,7 +207,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between border-b border-primary-light px-6 py-5">
           <div className="flex items-center gap-2">
             <Image
-              src="/images/logo.jpg"
+              src="/images/logo.webp"
               alt="Definite Dental Clinics"
               width={32}
               height={32}

@@ -12,9 +12,9 @@ import Container from "@/components/ui/Container";
 import ServiceCard from "@/components/services/ServiceCard";
 import { Link } from "@/lib/navigation";
 import Image from "next/image";
-import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Phone } from "lucide-react";
 import type { Locale } from "@/types";
-import SoonBadge from "@/components/ui/SoonBadge";
+import { isBookableOnline } from "@/lib/booking-config";
 
 type Props = {
   params: Promise<{ locale: string; category: string; slug: string }>;
@@ -120,37 +120,78 @@ export default async function ServiceDetailPage({ params }: Props) {
             {/* Sidebar CTA */}
             <div className="lg:col-span-1">
               <div className="sticky top-28 rounded-2xl bg-primary-light p-8">
-                <h3
-                  className={`${headingFont} text-xl font-bold text-primary`}
-                >
-                  {t("bookService")}
-                </h3>
-                <p className="mt-3 text-sm text-mid">
-                  {service.shortDescription[locale as Locale]}
-                </p>
-                <span
-                  className="
-                    mt-6 flex items-center justify-center w-full rounded-full bg-primary/50 py-3
-                    text-sm font-semibold uppercase tracking-wider text-white/70
-                    cursor-default
-                  "
-                >
-                  {t("bookService")}
-                  <SoonBadge />
-                </span>
-                <a
-                  href="https://wa.me/962795919919"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="
-                    mt-3 block w-full rounded-full border-2 border-[#25D366] py-3
-                    text-center text-sm font-semibold text-[#25D366]
-                    transition-all duration-300
-                    hover:bg-[#25D366] hover:text-white
-                  "
-                >
-                  WhatsApp
-                </a>
+                {isBookableOnline(service.slug) ? (
+                  <>
+                    <h3
+                      className={`${headingFont} text-xl font-bold text-primary`}
+                    >
+                      {t("bookService")}
+                    </h3>
+                    <p className="mt-3 text-sm text-mid">
+                      {service.shortDescription[locale as Locale]}
+                    </p>
+                    <Link
+                      href={`/book?service=${service.slug}`}
+                      className="
+                        mt-6 flex items-center justify-center w-full rounded-full bg-primary py-3
+                        text-sm font-semibold uppercase tracking-wider text-white
+                        transition-all duration-300
+                        hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/20
+                      "
+                    >
+                      {t("bookNow")}
+                    </Link>
+                    <a
+                      href="https://wa.me/962795919919"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="
+                        mt-3 block w-full rounded-full border-2 border-[#25D366] py-3
+                        text-center text-sm font-semibold text-[#25D366]
+                        transition-all duration-300
+                        hover:bg-[#25D366] hover:text-white
+                      "
+                    >
+                      WhatsApp
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    <h3
+                      className={`${headingFont} text-xl font-bold text-primary`}
+                    >
+                      {t("contactToBook")}
+                    </h3>
+                    <p className="mt-3 text-sm text-mid">
+                      {t("contactToBookMessage")}
+                    </p>
+                    <a
+                      href="tel:+962795919919"
+                      className="
+                        mt-6 flex items-center justify-center gap-2 w-full rounded-full bg-primary py-3
+                        text-sm font-semibold uppercase tracking-wider text-white
+                        transition-all duration-300
+                        hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/20
+                      "
+                    >
+                      <Phone className="h-4 w-4" />
+                      {t("callToBook")}
+                    </a>
+                    <a
+                      href="https://wa.me/962795919919"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="
+                        mt-3 block w-full rounded-full border-2 border-[#25D366] py-3
+                        text-center text-sm font-semibold text-[#25D366]
+                        transition-all duration-300
+                        hover:bg-[#25D366] hover:text-white
+                      "
+                    >
+                      WhatsApp
+                    </a>
+                  </>
+                )}
               </div>
             </div>
           </div>

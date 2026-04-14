@@ -2,58 +2,104 @@
 
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { ChevronDown, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { ChevronDown, Loader2, CheckCircle2, AlertCircle, Phone } from "lucide-react";
+import InlineCalendar from "./InlineCalendar";
+import { ONLINE_BOOKING_HID, getBookableServices, isBookableOnline } from "@/lib/booking-config";
 
-type Step = "patient" | "doctor" | "datetime" | "confirm" | "success";
-
-interface Doctor {
-  hid: string;
-  name: string;
+/**
+ * Normalizes user input to a 9-digit local number (7XXXXXXXX).
+ * Handles: "07XXXXXXXX" → "7XXXXXXXX", "7XXXXXXXX" → "7XXXXXXXX"
+ */
+function normalizeLocalNumber(input: string): string {
+  const digits = input.replace(/\D/g, "");
+  if (digits.startsWith("0")) return digits.slice(1);
+  return digits;
 }
+
+/** Validates that the normalized local number is a valid Jordanian mobile (9 digits, starts with 7[789]) */
+function isValidJordanLocal(localDigits: string): boolean {
+  return /^7[789]\d{7}$/.test(localDigits);
+}
+
+type Step = "service" | "patient" | "datetime" | "confirm" | "success";
 
 interface TimeSlot {
   time: string;
 }
 
-export default function ClinicaBookingForm() {
+interface ClinicaBookingFormProps {
+  preSelectedService?: string;
+}
+
+export default function ClinicaBookingForm({ preSelectedService }: ClinicaBookingFormProps) {
   const t = useTranslations("Book");
   const locale = useLocale() as "en" | "ar";
   const isArabic = locale === "ar";
   const headingFont = isArabic ? "font-cairo" : "font-cormorant";
 
+  const bookableServices = getBookableServices();
+
   // Step management
-  const [step, setStep] = useState<Step>("patient");
+  const [step, setStep] = useState<Step>("service");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // Service selection
+  const [selectedServiceSlug, setSelectedServiceSlug] = useState("");
+  const [selectedServiceName, setSelectedServiceName] = useState("");
 
   // Patient info
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [patientId, setPatientId] = useState("");
 
-  // Doctor selection
-  const [doctors, setDoctors] = useState<Doctor[]>([]);
-  const [selectedDoctor, setSelectedDoctor] = useState("");
-  const [selectedDoctorName, setSelectedDoctorName] = useState("");
-
   // Date & time
   const [selectedDate, setSelectedDate] = useState("");
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
   const [selectedTime, setSelectedTime] = useState("");
   const [loadingSlots, setLoadingSlots] = useState(false);
+  const [slotsError, setSlotsError] = useState(false);
 
-  // ── Step 1: Patient lookup / creation ──
+  // Pre-select service from URL query param
+  useEffect(() => {
+    if (preSelectedService && isBookableOnline(preSelectedService)) {
+      const svc = bookableServices.find((s) => s.slug === preSelectedService);
+      if (svc) {
+        setSelectedServiceSlug(svc.slug);
+        setSelectedServiceName(svc.title[locale]);
+        setStep("patient");
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // ── Step 1: Service selection ──
+  function handleServiceSelect(e: React.FormEvent) {
+    e.preventDefault();
+    setError("");
+    if (!selectedServiceSlug) return;
+    setStep("patient");
+  }
+
+  // ── Step 2: Patient lookup / creation ──
   async function handlePatientSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+
+    const localDigits = normalizeLocalNumber(phone);
+    if (!isValidJordanLocal(localDigits)) {
+      setError(t("invalidPhone"));
+      return;
+    }
+
+    const fullPhone = "962" + localDigits;
     setLoading(true);
 
     try {
-      // Check if patient exists
       const res = await fetch("/api/clinica/patient", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone, name }),
+        body: JSON.stringify({ phone: fullPhone, name }),
       });
       const data = await res.json();
 
@@ -66,9 +112,7 @@ export default function ClinicaBookingForm() {
         setPatientId(String(data.pid));
       }
 
-      // Move to doctor selection and fetch doctors
-      await fetchDoctors();
-      setStep("doctor");
+      setStep("datetime");
     } catch {
       setError(t("errorGeneral"));
     } finally {
@@ -76,43 +120,25 @@ export default function ClinicaBookingForm() {
     }
   }
 
-  async function fetchDoctors() {
-    const res = await fetch("/api/clinica/doctors");
-    const data = await res.json();
-
-    const list = Array.isArray(data) ? data : (data.doctors || data.clinics || data.data || []);
-    if (Array.isArray(list)) {
-      const mapped = list.map((d: Record<string, unknown>) => ({
-        hid: String(d.DrId || d.hid || d.id || ""),
-        name: String(d.DrName || d.name || d.doctor_name || ""),
-      }));
-      setDoctors(mapped);
-    }
-  }
-
-  // ── Step 2: Doctor selection ──
-  function handleDoctorSelect(e: React.FormEvent) {
-    e.preventDefault();
-    setError("");
-    if (!selectedDoctor) return;
-    setStep("datetime");
-  }
-
   // ── Step 3: Fetch time slots when date changes ──
   useEffect(() => {
-    if (step !== "datetime" || !selectedDate || !selectedDoctor) return;
+    if (step !== "datetime" || !selectedDate) return;
 
     setLoadingSlots(true);
     setSelectedTime("");
     setTimeSlots([]);
+    setSlotsError(false);
 
     fetch("/api/clinica/slots", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ hid: selectedDoctor, date: selectedDate }),
+      body: JSON.stringify({ hid: ONLINE_BOOKING_HID, date: selectedDate }),
     })
       .then((r) => {
-        if (!r.ok) return [];
+        if (!r.ok) {
+          setSlotsError(true);
+          return [];
+        }
         return r.json();
       })
       .then((data) => {
@@ -124,9 +150,9 @@ export default function ClinicaBookingForm() {
           setTimeSlots(mapped);
         }
       })
-      .catch(() => setError(t("errorGeneral")))
+      .catch(() => setSlotsError(true))
       .finally(() => setLoadingSlots(false));
-  }, [selectedDate, selectedDoctor, step, t]);
+  }, [selectedDate, step]);
 
   function handleDateTimeSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -144,7 +170,7 @@ export default function ClinicaBookingForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          hid: selectedDoctor,
+          hid: ONLINE_BOOKING_HID,
           date: selectedDate,
           pid: patientId,
           time: selectedTime,
@@ -167,16 +193,16 @@ export default function ClinicaBookingForm() {
 
   // ── Reset ──
   function resetForm() {
-    setStep("patient");
+    setStep("service");
+    setSelectedServiceSlug("");
+    setSelectedServiceName("");
     setName("");
     setPhone("");
     setPatientId("");
-    setDoctors([]);
-    setSelectedDoctor("");
-    setSelectedDoctorName("");
     setSelectedDate("");
     setTimeSlots([]);
     setSelectedTime("");
+    setSlotsError(false);
     setError("");
   }
 
@@ -191,9 +217,9 @@ export default function ClinicaBookingForm() {
     "w-full rounded-full border-2 border-primary py-3 text-sm font-semibold uppercase tracking-wider text-primary transition-all duration-300 hover:bg-primary hover:text-white";
 
   // ── Step indicators ──
-  const steps: Step[] = ["patient", "doctor", "datetime", "confirm"];
+  const steps: Step[] = ["service", "patient", "datetime", "confirm"];
   const stepIndex = steps.indexOf(step);
-  const stepLabels = [t("stepPatient"), t("stepDoctor"), t("stepDateTime"), t("stepConfirm")];
+  const stepLabels = [t("stepService"), t("stepPatient"), t("stepDateTime"), t("stepConfirm")];
 
   // ── SUCCESS ──
   if (step === "success") {
@@ -262,7 +288,69 @@ export default function ClinicaBookingForm() {
         </div>
       )}
 
-      {/* STEP 1: Patient Info */}
+      {/* STEP 1: Service Selection */}
+      {step === "service" && (
+        <form onSubmit={handleServiceSelect} className="space-y-5">
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-dark">
+              {t("serviceLabel")} *
+            </label>
+            <div className="relative">
+              <select
+                required
+                value={selectedServiceSlug}
+                onChange={(e) => {
+                  setSelectedServiceSlug(e.target.value);
+                  const svc = bookableServices.find((s) => s.slug === e.target.value);
+                  setSelectedServiceName(svc?.title[locale] || "");
+                }}
+                className={selectClass}
+              >
+                <option value="">
+                  {t("selectService")}
+                </option>
+                {bookableServices.map((svc) => (
+                  <option key={svc.slug} value={svc.slug}>
+                    {svc.title[locale]}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="pointer-events-none absolute end-3 top-1/2 h-4 w-4 -translate-y-1/2 text-mid" />
+            </div>
+          </div>
+          <button
+            type="submit"
+            disabled={!selectedServiceSlug}
+            className={btnPrimary}
+          >
+            {t("next")}
+          </button>
+
+          {/* Manual booking fallback */}
+          <div className="rounded-xl border border-primary/10 bg-primary-light/50 p-4 text-center">
+            <p className="text-sm text-mid">{t("manualOnlyMessage")}</p>
+            <div className="mt-3 flex items-center justify-center gap-3">
+              <a
+                href="tel:+962795919919"
+                className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 px-4 py-2 text-xs font-semibold text-primary transition-all hover:bg-primary hover:text-white"
+              >
+                <Phone className="h-3.5 w-3.5" />
+                {t("callUs")}
+              </a>
+              <a
+                href="https://wa.me/962795919919"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full border border-[#25D366]/30 px-4 py-2 text-xs font-semibold text-[#25D366] transition-all hover:bg-[#25D366] hover:text-white"
+              >
+                {t("orWhatsApp")}
+              </a>
+            </div>
+          </div>
+        </form>
+      )}
+
+      {/* STEP 2: Patient Info */}
       {step === "patient" && (
         <form onSubmit={handlePatientSubmit} className="space-y-5">
           <div>
@@ -282,69 +370,34 @@ export default function ClinicaBookingForm() {
             <label className="mb-1.5 block text-sm font-medium text-dark">
               {t("phone")} *
             </label>
-            <input
-              type="tel"
-              required
-              dir="ltr"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="07X XXXX XXX"
-              className={inputClass}
-            />
-          </div>
-          <button type="submit" disabled={loading} className={btnPrimary}>
-            {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-            {t("next")}
-          </button>
-        </form>
-      )}
-
-      {/* STEP 2: Select Doctor */}
-      {step === "doctor" && (
-        <form onSubmit={handleDoctorSelect} className="space-y-5">
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-dark">
-              {t("selectDoctor")} *
-            </label>
-            <div className="relative">
-              <select
+            <div className="flex" dir="ltr">
+              <span className="inline-flex items-center rounded-s-xl border border-e-0 border-primary/10 bg-primary-light px-3.5 text-sm font-medium text-primary select-none">
+                +962
+              </span>
+              <input
+                type="tel"
                 required
-                value={selectedDoctor}
-                onChange={(e) => {
-                  setSelectedDoctor(e.target.value);
-                  const doc = doctors.find((d) => d.hid === e.target.value);
-                  setSelectedDoctorName(doc?.name || "");
-                }}
-                className={selectClass}
-              >
-                <option value="">
-                  {isArabic ? "اختر الطبيب / العيادة" : "Choose doctor / clinic"}
-                </option>
-                {doctors.map((d) => (
-                  <option key={d.hid} value={d.hid}>
-                    {d.name}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown className="pointer-events-none absolute end-3 top-1/2 h-4 w-4 -translate-y-1/2 text-mid" />
+                dir="ltr"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="7X XXXX XXX"
+                className={`${inputClass} rounded-s-none`}
+              />
             </div>
-            {doctors.length === 0 && (
-              <p className="mt-2 text-xs text-mid">{t("noDoctors")}</p>
-            )}
+            <p className="mt-1.5 text-xs text-mid">
+              {isArabic ? "أدخل رقمك بدون رمز الدولة (مثال: 79 5 919 919)" : "Enter your number without country code (e.g. 79 5 919 919)"}
+            </p>
           </div>
           <div className="flex gap-3">
             <button
               type="button"
-              onClick={() => setStep("patient")}
+              onClick={() => setStep("service")}
               className={btnOutline}
             >
               {t("back")}
             </button>
-            <button
-              type="submit"
-              disabled={!selectedDoctor}
-              className={btnPrimary}
-            >
+            <button type="submit" disabled={loading} className={btnPrimary}>
+              {loading && <Loader2 className="h-4 w-4 animate-spin" />}
               {t("next")}
             </button>
           </div>
@@ -358,13 +411,10 @@ export default function ClinicaBookingForm() {
             <label className="mb-1.5 block text-sm font-medium text-dark">
               {t("date")} *
             </label>
-            <input
-              type="date"
-              required
-              value={selectedDate}
-              min={new Date().toISOString().split("T")[0]}
-              onChange={(e) => setSelectedDate(e.target.value)}
-              className={inputClass}
+            <InlineCalendar
+              selectedDate={selectedDate}
+              onDateSelect={(d) => setSelectedDate(d)}
+              locale={locale}
             />
           </div>
 
@@ -395,6 +445,8 @@ export default function ClinicaBookingForm() {
                     </button>
                   ))}
                 </div>
+              ) : slotsError ? (
+                <p className="py-3 text-sm text-red-600">{t("slotsError")}</p>
               ) : (
                 <p className="py-3 text-sm text-mid">{t("noSlots")}</p>
               )}
@@ -404,7 +456,7 @@ export default function ClinicaBookingForm() {
           <div className="flex gap-3">
             <button
               type="button"
-              onClick={() => setStep("doctor")}
+              onClick={() => setStep("patient")}
               className={btnOutline}
             >
               {t("back")}
@@ -431,19 +483,17 @@ export default function ClinicaBookingForm() {
             </h3>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
+                <span className="text-mid">{t("selectedService")}</span>
+                <span className="font-medium text-dark">{selectedServiceName}</span>
+              </div>
+              <div className="flex justify-between">
                 <span className="text-mid">{t("fullName")}</span>
                 <span className="font-medium text-dark">{name}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-mid">{t("phone")}</span>
                 <span className="font-medium text-dark" dir="ltr">
-                  {phone}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-mid">{t("doctor")}</span>
-                <span className="font-medium text-dark">
-                  {selectedDoctorName}
+                  +962 {normalizeLocalNumber(phone)}
                 </span>
               </div>
               <div className="flex justify-between">

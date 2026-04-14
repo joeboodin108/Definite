@@ -7,6 +7,7 @@ import ClinicaBookingForm from "@/components/book/ClinicaBookingForm";
 
 type Props = {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ service?: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -21,8 +22,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function BookPage({ params }: Props) {
+export default async function BookPage({ params, searchParams }: Props) {
   const { locale } = await params;
+  const { service } = await searchParams;
   setRequestLocale(locale);
   const t = await getTranslations("Book");
   const isArabic = locale === "ar";
@@ -40,7 +42,7 @@ export default async function BookPage({ params }: Props) {
 
       <section className="py-16 lg:py-24">
         <Container>
-          <ClinicaBookingForm />
+          <ClinicaBookingForm preSelectedService={service} />
         </Container>
       </section>
     </>

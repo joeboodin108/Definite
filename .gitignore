@@ -28,6 +28,9 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# Source/raw images
+/pics/
+
 # Clinica API docs (contain credentials)
 *.postman_collection.json
 dental.xlsx

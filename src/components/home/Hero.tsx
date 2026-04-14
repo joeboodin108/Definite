@@ -1,7 +1,6 @@
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/lib/navigation";
 import Image from "next/image";
-import SoonBadge from "@/components/ui/SoonBadge";
 
 export default function Hero() {
   const t = useTranslations("Home");
@@ -28,7 +27,7 @@ export default function Hero() {
               {/* Glow */}
               <div className="absolute inset-0 rounded-full bg-primary/20 blur-3xl scale-110" />
               <Image
-                src="/images/logo.jpg"
+                src="/images/logo.webp"
                 alt="Definite Dental Clinics"
                 width={200}
                 height={200}
@@ -73,18 +72,20 @@ export default function Hero() {
               className={`${isArabic ? "mt-12" : "mt-10"} flex flex-wrap items-center gap-4 opacity-0 animate-slide-up`}
               style={{ animationDelay: "400ms" }}
             >
-              <span
+              <Link
+                href="/book"
                 className="
                   inline-flex items-center gap-2 rounded-full
-                  bg-primary/50 px-8 py-3.5
-                  text-[0.82rem] font-semibold uppercase tracking-[0.1em] text-white/80
+                  bg-primary px-8 py-3.5
+                  text-[0.82rem] font-semibold uppercase tracking-[0.1em] text-white
                   shadow-lg shadow-primary/15
-                  cursor-default
+                  transition-all duration-300
+                  hover:bg-primary-dark hover:shadow-xl hover:shadow-primary/20
+                  hover:-translate-y-[1px] active:translate-y-0
                 "
               >
                 {t("bookAppointment")}
-                <SoonBadge />
-              </span>
+              </Link>
               <Link
                 href="/services"
                 className="
@@ -135,7 +136,7 @@ export default function Hero() {
               {/* Inner glow ring */}
               <div className="absolute -inset-3 rounded-full bg-gradient-to-br from-accent/20 via-transparent to-primary/20 blur-2xl" />
               <Image
-                src="/images/logo.jpg"
+                src="/images/logo.webp"
                 alt="Definite Dental Clinics"
                 width={380}
                 height={380}

@@ -67,7 +67,26 @@ async function clinicaFetch(path: string, body: Record<string, unknown>) {
     }),
   });
 
-  const data = await res.json();
+  const text = await res.text();
+
+  // The Clinica API sometimes returns HTML error pages instead of JSON.
+  // Detect this and return a structured error instead of crashing.
+  let data: unknown;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    console.error(
+      `[clinica] Non-JSON response from ${path} (status ${res.status}):`,
+      text.slice(0, 200)
+    );
+    // Only invalidate the session for auth-related failures (401/403),
+    // not for 500s which the Clinica API returns when a date has no schedule.
+    if (res.status === 401 || res.status === 403) {
+      cachedSession = null;
+    }
+    return { ok: false, status: res.status || 502, data: { error: "Invalid response from clinic system" } };
+  }
+
   return { ok: res.ok, status: res.status, data };
 }
 

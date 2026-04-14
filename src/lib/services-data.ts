@@ -13,7 +13,7 @@ export const services: ServiceData[] = [
     slug: "veneers",
     category: "dental-treatments",
     icon: "Sparkles",
-    image: "/images/services/veneers.jpg",
+    image: "/images/services/veneers.webp",
     title: { en: "Veneers", ar: "القشور الخزفية" },
     shortDescription: {
       en: "Custom porcelain veneers to transform your smile with natural-looking results.",
@@ -32,7 +32,7 @@ export const services: ServiceData[] = [
     slug: "pediatric-treatments",
     category: "dental-treatments",
     icon: "Baby",
-    image: "/images/services/pediatric-treatments.jpg",
+    image: "/images/services/pediatric-treatments.webp",
     title: { en: "Pediatric Treatments", ar: "إختصاص أطفال" },
     shortDescription: {
       en: "Gentle, specialized dental care designed to keep your child's smile healthy and bright.",
@@ -51,7 +51,7 @@ export const services: ServiceData[] = [
     slug: "lumineers",
     category: "dental-treatments",
     icon: "Sun",
-    image: "/images/services/lumineers.jpg",
+    image: "/images/services/lumineers.webp",
     title: { en: "Lumineers", ar: "القشور الخزفية الرقيقة جداً" },
     shortDescription: {
       en: "Ultra-thin veneers that require minimal tooth preparation for a stunning smile.",
@@ -70,7 +70,7 @@ export const services: ServiceData[] = [
     slug: "implants",
     category: "dental-treatments",
     icon: "Anchor",
-    image: "/images/services/implants.jpg",
+    image: "/images/services/implants.webp",
     title: { en: "Implants", ar: "زراعة الأسنان" },
     shortDescription: {
       en: "Permanent tooth replacement that looks, feels, and functions like natural teeth.",
@@ -89,7 +89,7 @@ export const services: ServiceData[] = [
     slug: "whitening",
     category: "dental-treatments",
     icon: "Zap",
-    image: "/images/services/whitening.jpg",
+    image: "/images/services/whitening.webp",
     title: { en: "Laser and Home Whitening", ar: "تبييض بالليزر و تبييض منزلي" },
     shortDescription: {
       en: "Professional teeth whitening options for a brighter, more confident smile.",
@@ -108,7 +108,7 @@ export const services: ServiceData[] = [
     slug: "x-rays",
     category: "dental-treatments",
     icon: "Scan",
-    image: "/images/services/x-rays.jpg",
+    image: "/images/services/x-rays.webp",
     title: { en: "X-Rays", ar: "تصوير أشعة" },
     shortDescription: {
       en: "Advanced digital imaging for precise diagnosis and treatment planning.",
@@ -127,7 +127,7 @@ export const services: ServiceData[] = [
     slug: "braces",
     category: "dental-treatments",
     icon: "AlignCenter",
-    image: "/images/services/braces.jpg",
+    image: "/images/services/braces.webp",
     title: { en: "Braces", ar: "تقويم الأسنان" },
     shortDescription: {
       en: "Orthodontic solutions to straighten teeth and correct bite alignment.",
@@ -146,7 +146,7 @@ export const services: ServiceData[] = [
     slug: "root-canal",
     category: "dental-treatments",
     icon: "Shield",
-    image: "/images/services/root-canal.jpg",
+    image: "/images/services/root-canal.webp",
     title: { en: "Root Canal Treatment", ar: "سحب عصب" },
     shortDescription: {
       en: "Pain-free root canal therapy to save infected teeth and relieve discomfort.",
@@ -165,7 +165,7 @@ export const services: ServiceData[] = [
     slug: "extractions",
     category: "dental-treatments",
     icon: "CircleMinus",
-    image: "/images/services/extractions.jpg",
+    image: "/images/services/extractions.webp",
     title: { en: "Simple and Surgical Extractions", ar: "خلع بسيط وجراحي" },
     shortDescription: {
       en: "Safe and comfortable tooth extraction procedures for all cases.",
@@ -184,7 +184,7 @@ export const services: ServiceData[] = [
     slug: "gum-depigmentation",
     category: "dental-treatments",
     icon: "Paintbrush",
-    image: "/images/services/gum-depigmentation.jpg",
+    image: "/images/services/gum-depigmentation.webp",
     title: { en: "Gum Depigmentation", ar: "تصبغات اللثة" },
     shortDescription: {
       en: "Restore healthy, pink gums by treating dark pigmentation spots.",
@@ -203,7 +203,7 @@ export const services: ServiceData[] = [
     slug: "crowns",
     category: "dental-treatments",
     icon: "Crown",
-    image: "/images/services/crowns.jpg",
+    image: "/images/services/crowns.webp",
     title: { en: "Crowns", ar: "التيجان" },
     shortDescription: {
       en: "Custom dental crowns to restore damaged teeth and enhance your smile.",
@@ -222,7 +222,7 @@ export const services: ServiceData[] = [
     slug: "teeth-clenching",
     category: "dental-treatments",
     icon: "Lock",
-    image: "/images/services/teeth-clenching.jpg",
+    image: "/images/services/teeth-clenching.webp",
     title: { en: "Teeth Clenching", ar: "صك الأسنان" },
     shortDescription: {
       en: "Treatment solutions for bruxism and teeth grinding to protect your smile.",
@@ -241,7 +241,7 @@ export const services: ServiceData[] = [
     slug: "scaling-polishing",
     category: "dental-treatments",
     icon: "Sparkle",
-    image: "/images/services/scaling-polishing.jpg",
+    image: "/images/services/scaling-polishing.webp",
     title: { en: "Scaling and Polishing", ar: "التنظيف والتلميع" },
     shortDescription: {
       en: "Professional cleaning to remove plaque, tartar, and stains for healthier teeth.",
@@ -264,7 +264,7 @@ export const services: ServiceData[] = [
     slug: "botox-face",
     category: "facial-treatments",
     icon: "Sparkles",
-    image: "/images/services/botox-face.jpg",
+    image: "/images/services/botox-face.webp",
     title: { en: "Botox for Face", ar: "بوتكس للوجه" },
     shortDescription: {
       en: "Reduce fine lines and wrinkles for a refreshed, youthful appearance.",
@@ -283,7 +283,7 @@ export const services: ServiceData[] = [
     slug: "botox-underarms",
     category: "facial-treatments",
     icon: "Droplets",
-    image: "/images/services/botox-underarms.jpg",
+    image: "/images/services/botox-underarms.webp",
     title: { en: "Botox under Arms", ar: "بوتكس تحت الأبط" },
     shortDescription: {
       en: "Effective treatment for excessive underarm sweating (hyperhidrosis).",
@@ -302,7 +302,7 @@ export const services: ServiceData[] = [
     slug: "botox-hands",
     category: "facial-treatments",
     icon: "Hand",
-    image: "/images/services/botox-hands.jpg",
+    image: "/images/services/botox-hands.webp",
     title: { en: "Botox for Hands", ar: "بوتكس للأيدي كثيرة التعرق" },
     shortDescription: {
       en: "Stop excessive hand sweating with precision Botox treatment.",
@@ -321,7 +321,7 @@ export const services: ServiceData[] = [
     slug: "golden-threads",
     category: "facial-treatments",
     icon: "Waypoints",
-    image: "/images/services/golden-threads.jpg",
+    image: "/images/services/golden-threads.webp",
     title: { en: "Golden Threads", ar: "الخيوط الذهبية" },
     shortDescription: {
       en: "Lift and tighten skin naturally with dissolving thread technology.",
@@ -340,7 +340,7 @@ export const services: ServiceData[] = [
     slug: "profhilo",
     category: "facial-treatments",
     icon: "Droplet",
-    image: "/images/services/profhilo.jpg",
+    image: "/images/services/profhilo.webp",
     title: { en: "Profhilo", ar: "بروفايلو" },
     shortDescription: {
       en: "Bio-remodeling treatment for deep hydration and skin firmness.",
@@ -359,7 +359,7 @@ export const services: ServiceData[] = [
     slug: "derma-pen",
     category: "facial-treatments",
     icon: "Pen",
-    image: "/images/services/derma-pen.jpg",
+    image: "/images/services/derma-pen.webp",
     title: { en: "Derma Pen", ar: "ديرما بن" },
     shortDescription: {
       en: "Microneedling therapy to rejuvenate skin and reduce scars and pores.",
@@ -378,7 +378,7 @@ export const services: ServiceData[] = [
     slug: "radiesse",
     category: "facial-treatments",
     icon: "CircleDot",
-    image: "/images/services/radiesse.jpg",
+    image: "/images/services/radiesse.webp",
     title: { en: "Radiesse", ar: "الراديس" },
     shortDescription: {
       en: "Dermal filler that provides immediate volume and stimulates collagen growth.",
@@ -397,7 +397,7 @@ export const services: ServiceData[] = [
     slug: "sculptra",
     category: "facial-treatments",
     icon: "Layers",
-    image: "/images/services/sculptra.jpg",
+    image: "/images/services/sculptra.webp",
     title: { en: "Sculptra", ar: "السكلبترا" },
     shortDescription: {
       en: "Gradual collagen-stimulating treatment for natural facial rejuvenation.",
@@ -416,7 +416,7 @@ export const services: ServiceData[] = [
     slug: "hair-plasma",
     category: "facial-treatments",
     icon: "Waves",
-    image: "/images/services/hair-plasma.jpg",
+    image: "/images/services/hair-plasma.webp",
     title: { en: "Hair Plasma", ar: "بلازما للشعر" },
     shortDescription: {
       en: "PRP therapy to stimulate hair growth and reduce hair thinning.",
@@ -435,7 +435,7 @@ export const services: ServiceData[] = [
     slug: "facial-fillers",
     category: "facial-treatments",
     icon: "Gem",
-    image: "/images/services/facial-fillers.jpg",
+    image: "/images/services/facial-fillers.webp",
     title: { en: "Facial Fillers", ar: "فيلر الوجه" },
     shortDescription: {
       en: "Restore volume and contour to cheeks, jawline, and chin for a sculpted look.",
@@ -454,7 +454,7 @@ export const services: ServiceData[] = [
     slug: "lip-fillers",
     category: "facial-treatments",
     icon: "Heart",
-    image: "/images/services/lip-fillers.jpg",
+    image: "/images/services/lip-fillers.webp",
     title: { en: "Lip Fillers", ar: "فيلر الشفاه" },
     shortDescription: {
       en: "Enhance lip volume, shape, and symmetry for a natural, fuller look.",
@@ -473,7 +473,7 @@ export const services: ServiceData[] = [
     slug: "mesotherapy",
     category: "facial-treatments",
     icon: "Syringe",
-    image: "/images/services/mesotherapy.jpg",
+    image: "/images/services/mesotherapy.webp",
     title: { en: "Mesotherapy", ar: "الميزوثيرابي" },
     shortDescription: {
       en: "Micro-injection therapy delivering vitamins and nutrients directly to the skin.",
@@ -492,7 +492,7 @@ export const services: ServiceData[] = [
     slug: "facial-plasma",
     category: "facial-treatments",
     icon: "Sparkle",
-    image: "/images/services/facial-plasma.jpg",
+    image: "/images/services/facial-plasma.webp",
     title: { en: "Facial Plasma", ar: "بلازما للوجه" },
     shortDescription: {
       en: "PRP facial treatment using your own blood to rejuvenate and brighten skin.",

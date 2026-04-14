@@ -71,7 +71,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <NextIntlClientProvider messages={messages}>
           <GeometricBackground />
           <Navbar />
-          <main className="min-h-screen">{children}</main>
+          <main className="relative z-10 min-h-screen">{children}</main>
           <Footer />
           <FloatingWhatsApp />
           <FloatingEmergency />

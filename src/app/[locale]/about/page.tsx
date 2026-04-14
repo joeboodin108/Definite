@@ -24,13 +24,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const facilityImages = [
-  "https://images.unsplash.com/photo-1629909613654-28e377c37b09",
-  "https://images.unsplash.com/photo-1629909615184-74f495363b67",
-  "https://images.unsplash.com/photo-1631549916768-4119b2e5f926",
-  "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5",
-];
-
 export default async function AboutPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
@@ -44,7 +37,7 @@ export default async function AboutPage({ params }: Props) {
         variant="split"
         title={t("title")}
         subtitle={t("subtitle")}
-        image="https://images.unsplash.com/photo-1629909613654-28e377c37b09"
+        image="/images/about/outdoor.webp"
         isArabic={isArabic}
         headingFont={headingFont}
       />
@@ -138,22 +131,50 @@ export default async function AboutPage({ params }: Props) {
               {t("facilityTitle")}
             </h2>
           </div>
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {facilityImages.map((image, index) => (
-              <div
-                key={index}
-                className="group relative h-64 overflow-hidden rounded-xl"
-              >
-                <Image
-                  src={image}
-                  alt=""
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-primary/10 transition-colors group-hover:bg-primary/20" />
-              </div>
-            ))}
+          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {/* Row 1: Lounge (wide) + Treatment Room 1 */}
+            <div className="group relative h-72 overflow-hidden rounded-xl sm:col-span-2">
+              <Image
+                src="/images/about/comfort.webp"
+                alt={isArabic ? "صالة الانتظار الفاخرة" : "Luxury waiting lounge"}
+                fill
+                sizes="(max-width: 640px) 100vw, 66vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-primary/10 transition-colors group-hover:bg-primary/20" />
+            </div>
+            <div className="group relative h-72 overflow-hidden rounded-xl">
+              <Image
+                src="/images/about/clinic.webp"
+                alt={isArabic ? "غرفة العلاج" : "Treatment room"}
+                fill
+                sizes="(max-width: 640px) 100vw, 33vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-primary/10 transition-colors group-hover:bg-primary/20" />
+            </div>
+
+            {/* Row 2: Treatment Room 2 + Outdoor Garden (wide) */}
+            <div className="group relative h-72 overflow-hidden rounded-xl">
+              <Image
+                src="/images/about/clinic2.webp"
+                alt={isArabic ? "غرفة العلاج الثانية" : "Second treatment room"}
+                fill
+                sizes="(max-width: 640px) 100vw, 33vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-primary/10 transition-colors group-hover:bg-primary/20" />
+            </div>
+            <div className="group relative h-72 overflow-hidden rounded-xl sm:col-span-2">
+              <Image
+                src="/images/about/comfort2.webp"
+                alt={isArabic ? "الحديقة الخارجية" : "Outdoor garden"}
+                fill
+                sizes="(max-width: 640px) 100vw, 66vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-primary/10 transition-colors group-hover:bg-primary/20" />
+            </div>
           </div>
         </Container>
       </section>
