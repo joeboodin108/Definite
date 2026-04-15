@@ -27,7 +27,7 @@ export default function Hero() {
               {/* Glow */}
               <div className="absolute inset-0 rounded-full bg-primary/20 blur-3xl scale-110" />
               <Image
-                src="/images/logo.webp"
+                src="/images/logo.png"
                 alt="Definite Dental Clinics"
                 width={200}
                 height={200}
@@ -136,7 +136,7 @@ export default function Hero() {
               {/* Inner glow ring */}
               <div className="absolute -inset-3 rounded-full bg-gradient-to-br from-accent/20 via-transparent to-primary/20 blur-2xl" />
               <Image
-                src="/images/logo.webp"
+                src="/images/logo.png"
                 alt="Definite Dental Clinics"
                 width={380}
                 height={380}

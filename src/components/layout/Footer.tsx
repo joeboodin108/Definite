@@ -1,6 +1,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/lib/navigation";
 import { Phone, MapPin } from "lucide-react";
+import Image from "next/image";
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -57,24 +58,37 @@ export default function Footer() {
         </div>
       </section>
 
-      <footer className="bg-gray-700 text-primary/80">
+      <footer className="bg-gray-700 text-white">
         <div className="mx-auto max-w-7xl px-5 lg:px-8 py-16">
           <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
             {/* Brand Column */}
             <div className="lg:col-span-1">
-              <Link href="/" className="inline-block">
-                <span className={`text-2xl font-bold text-[#C4B0DB] ${headingFont}`}>
+              <Link href="/" className="inline-flex items-center gap-2.5">
+                <Image
+                  src="/images/logo.png"
+                  alt="Definite Dental Clinics"
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
+                <span
+                  className={`text-2xl font-bold text-white ${headingFont}`}
+                  style={{ textShadow: '0 0 7px rgba(168,85,247,0.6), 0 0 20px rgba(168,85,247,0.3)' }}
+                >
                   Definite
                 </span>
               </Link>
-              <p className="mt-4 text-sm leading-relaxed text-[#C4B0DB]/80">
+              <p className="mt-4 text-sm leading-relaxed text-white" style={{ textShadow: '0 0 6px rgba(168,85,247,0.25)' }}>
                 {t("tagline")}
               </p>
             </div>
 
             {/* Quick Links */}
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-[#C4B0DB]">
+              <h3
+                className="text-sm font-semibold uppercase tracking-[0.15em] text-white"
+                style={{ textShadow: '0 0 7px rgba(168,85,247,0.6), 0 0 20px rgba(168,85,247,0.3)' }}
+              >
                 {t("quickLinks")}
               </h3>
               <nav className="mt-5 flex flex-col gap-3">
@@ -88,7 +102,8 @@ export default function Footer() {
                             ? "/"
                             : `/${key}`
                         }
-                        className="text-sm text-[#C4B0DB]/80 transition-colors hover:text-accent"
+                        className="text-sm text-white transition-colors hover:text-accent"
+                        style={{ textShadow: '0 0 6px rgba(168,85,247,0.25)' }}
                       >
                         {tNav(key)}
                       </Link>
@@ -100,19 +115,24 @@ export default function Footer() {
 
             {/* Services */}
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-[#C4B0DB]">
+              <h3
+                className="text-sm font-semibold uppercase tracking-[0.15em] text-white"
+                style={{ textShadow: '0 0 7px rgba(168,85,247,0.6), 0 0 20px rgba(168,85,247,0.3)' }}
+              >
                 {tNav("services")}
               </h3>
               <nav className="mt-5 flex flex-col gap-3">
                 <Link
                   href="/services/dental-treatments"
-                  className="text-sm text-[#C4B0DB]/80 transition-colors hover:text-accent"
+                  className="text-sm text-white transition-colors hover:text-accent"
+                  style={{ textShadow: '0 0 6px rgba(168,85,247,0.25)' }}
                 >
                   {t("dental")}
                 </Link>
                 <Link
                   href="/services/facial-treatments"
-                  className="text-sm text-[#C4B0DB]/80 transition-colors hover:text-accent"
+                  className="text-sm text-white transition-colors hover:text-accent"
+                  style={{ textShadow: '0 0 6px rgba(168,85,247,0.25)' }}
                 >
                   {t("facial")}
                 </Link>
@@ -121,18 +141,22 @@ export default function Footer() {
 
             {/* Contact */}
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-[#C4B0DB]">
+              <h3
+                className="text-sm font-semibold uppercase tracking-[0.15em] text-white"
+                style={{ textShadow: '0 0 7px rgba(168,85,247,0.6), 0 0 20px rgba(168,85,247,0.3)' }}
+              >
                 {t("contactUs")}
               </h3>
               <div className="mt-5 flex flex-col gap-4">
                 <a
                   href="tel:+962795919919"
-                  className="flex items-center gap-3 text-sm text-[#C4B0DB]/80 transition-colors hover:text-accent"
+                  className="flex items-center gap-3 text-sm text-white transition-colors hover:text-accent"
+                  style={{ textShadow: '0 0 6px rgba(168,85,247,0.25)' }}
                 >
                   <Phone className="h-4 w-4 shrink-0" />
                   <span dir="ltr">{t("phone")}</span>
                 </a>
-                <div className="flex items-center gap-3 text-sm text-[#C4B0DB]/80">
+                <div className="flex items-center gap-3 text-sm text-white" style={{ textShadow: '0 0 6px rgba(168,85,247,0.25)' }}>
                   <MapPin className="h-4 w-4 shrink-0" />
                   {t("address")}
                 </div>
@@ -143,7 +167,8 @@ export default function Footer() {
                     href="https://instagram.com/definite_dental_clinics"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-[#C4B0DB]/30 text-[#C4B0DB]/80 transition-all hover:border-accent hover:text-accent"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/30 text-white transition-all hover:border-accent hover:text-accent"
+                    style={{ filter: 'drop-shadow(0 0 4px rgba(168,85,247,0.3))' }}
                     aria-label="Instagram"
                   >
                     <InstagramIcon className="h-4 w-4" />
@@ -152,7 +177,8 @@ export default function Footer() {
                     href="https://facebook.com/DefiniteClinics"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-[#C4B0DB]/30 text-[#C4B0DB]/80 transition-all hover:border-accent hover:text-accent"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/30 text-white transition-all hover:border-accent hover:text-accent"
+                    style={{ filter: 'drop-shadow(0 0 4px rgba(168,85,247,0.3))' }}
                     aria-label="Facebook"
                   >
                     <FacebookIcon className="h-4 w-4" />
@@ -163,8 +189,8 @@ export default function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div className="mt-14 border-t border-[#C4B0DB]/20 pt-8 text-center">
-            <p className="text-xs text-[#C4B0DB]/60 tracking-wide">
+          <div className="mt-14 border-t border-white/20 pt-8 text-center">
+            <p className="text-xs text-white tracking-wide" style={{ textShadow: '0 0 6px rgba(168,85,247,0.25)' }}>
               {t("copyright")}
             </p>
           </div>

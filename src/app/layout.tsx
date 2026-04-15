@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     siteName: "Definite Dental Clinics",
     images: [
       {
-        url: "/images/logo.webp",
+        url: "/images/logo.png",
         width: 800,
         height: 600,
         alt: "Definite Dental Clinics",

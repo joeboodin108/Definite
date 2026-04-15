@@ -58,10 +58,10 @@ export default function CategoryCards() {
                 </div>
 
                 {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
                 {/* Content */}
-                <div className="relative z-10 p-8 md:p-10">
+                <div className="relative z-10 p-8 md:p-10" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.4)' }}>
                   <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
                     {index === 0
                       ? isArabic ? "٠١" : "01"
@@ -75,7 +75,7 @@ export default function CategoryCards() {
                   >
                     {t(`${key}Title`)}
                   </h3>
-                  <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/70">
+                  <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/90">
                     {t(`${key}Description`)}
                   </p>
 
