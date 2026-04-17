@@ -19,8 +19,9 @@ const ONLINE_BOOKABLE_SLUGS = new Set([
 ]);
 
 /** Check whether a service can be booked online */
-export function isBookableOnline(slug: string): boolean {
-  return ONLINE_BOOKABLE_SLUGS.has(slug);
+export function isBookableOnline(_slug: string): boolean {
+  // Online booking temporarily disabled — API not fully configured.
+  return false;
 }
 
 /** Get all services that support online booking */

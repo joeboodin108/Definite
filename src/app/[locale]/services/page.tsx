@@ -80,14 +80,14 @@ export default async function ServicesPage({ params }: Props) {
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent" />
-                  <div className="relative z-10 p-8 md:p-10">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                  <div className="relative z-10 p-8 md:p-10" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.4)' }}>
                     <h2
                       className={`${headingFont} text-3xl font-bold text-white md:text-4xl`}
                     >
                       {t(`${key}Title`)}
                     </h2>
-                    <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/70">
+                    <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/90">
                       {t(`${key}Description`)}
                     </p>
                     <div className="mt-5 inline-flex items-center gap-2 text-accent text-sm font-semibold uppercase tracking-wider">
@@ -95,6 +95,7 @@ export default async function ServicesPage({ params }: Props) {
                       <ArrowRight className={`h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 ${isArabic ? "rtl:rotate-180" : ""}`} />
                     </div>
                   </div>
+                  <div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-accent via-accent/50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 </Link>
               </ScrollReveal>
             ))}
