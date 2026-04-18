@@ -4,6 +4,9 @@ import type { ServiceData } from "@/types";
 /** Clinic Two healthcare ID — the only clinic that supports online booking */
 export const ONLINE_BOOKING_HID = "1311";
 
+/** Kill switch — flip to true once the Clinica API is fully configured. */
+const ONLINE_BOOKING_ENABLED = false;
+
 /** Service slugs approved for online booking through Clinic Two */
 const ONLINE_BOOKABLE_SLUGS = new Set([
   "veneers",
@@ -19,9 +22,8 @@ const ONLINE_BOOKABLE_SLUGS = new Set([
 ]);
 
 /** Check whether a service can be booked online */
-export function isBookableOnline(_slug: string): boolean {
-  // Online booking temporarily disabled — API not fully configured.
-  return false;
+export function isBookableOnline(slug: string): boolean {
+  return ONLINE_BOOKING_ENABLED && ONLINE_BOOKABLE_SLUGS.has(slug);
 }
 
 /** Get all services that support online booking */
