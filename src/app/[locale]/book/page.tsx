@@ -51,8 +51,8 @@ export default async function BookPage({ params }: Props) {
     : "Message us on WhatsApp — quick replies during clinic hours.";
   const hoursLabel = isArabic ? "ساعات العمل" : "Clinic Hours";
   const hoursValue = isArabic
-    ? "السبت – الخميس: ١٠ص – ٨م"
-    : "Saturday – Thursday: 10am – 8pm";
+    ? "السبت – الخميس: ٩ص – ١٢م  •  الجمعة: ١م – ٩م"
+    : "Sat – Thu: 9am – 12am  •  Fri: 1pm – 9pm";
   const addressLabel = isArabic ? "العنوان" : "Location";
   const addressValue = isArabic
     ? "عبدون، عمّان، الأردن"
